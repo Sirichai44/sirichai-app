@@ -1,12 +1,24 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
+import { Provider } from "react-redux"; //redux
 
-import "./styles/index.css";
-import router from "./routes/root";
+import { ToastContainer } from "react-toastify"; //toastify
+
+import "@/styles/tailwind.css";
+import router from "@/routes/root";
+import store from "./store/store";
+
+import "react-toastify/dist/ReactToastify.css";
+import { CssVarsProvider } from "@mui/joy";
+import theme from "./styles/theme";
+import "./styles/global.css";
+import "./styles/tailwind.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+  <Provider store={store}>
+    <CssVarsProvider theme={theme}>
+      <RouterProvider router={router} />
+      <ToastContainer />
+    </CssVarsProvider>
+  </Provider>
 );
