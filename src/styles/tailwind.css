@@ -18,3 +18,21 @@
     word-break: normal;
   }
 }
+
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.blinking-cursor:after {
+  content: '|';
+  font-weight: 200;
+  animation: blink 1.5s infinite;
+}

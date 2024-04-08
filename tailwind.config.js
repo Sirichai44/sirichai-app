@@ -1,13 +1,18 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
-        nurito: ["Nurito", "sans-serif"],
-        popins: ["Poppins", "sans-serif"],
+        nurito: ['Nurito', 'sans-serif'],
+        popins: ['Poppins', 'sans-serif']
       },
-    },
+      colors: {
+        'primary-light': '#374151',
+        'primary-dark': '#D1D5DB'
+      }
+    }
   },
-  plugins: [],
+  plugins: []
 };
