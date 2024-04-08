@@ -1,4 +1,4 @@
-export const useLogger = () => {
+const useLogger = () => {
   return (storeAPI: any) => (next: any) => (action: any) => {
     const stateBefore = storeAPI.getState();
     const result = next(action);
@@ -23,3 +23,5 @@ export const useLogger = () => {
     return result;
   };
 };
+
+export default useLogger;

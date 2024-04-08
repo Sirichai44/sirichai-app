@@ -12,9 +12,12 @@ import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import ModeCommentRoundedIcon from '@mui/icons-material/ModeCommentRounded';
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
+import useResponsiveWidth from '@/hook/useResponsiveWidth';
 const index = () => {
   const dispatch = useDispatch<Dispatch<Action.Action>>();
   // const state = useSelector((state: Type.IStore) => state.test);
+  const { md } = useResponsiveWidth();
+  console.log('md', md);
 
   const word = `%c
   ██████╗  ██╗███╗   ██╗ ██████╗       ██╗██████╗ 
