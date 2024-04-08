@@ -6,10 +6,10 @@ export const useLogger = () => {
 
     // console.group("DISPATCH");
     console.log(
-      "%cDISPATCH:",
-      "color: #03A9F4; font-weight: bold;",
-      action.type.replace(/\'/g, ""),
-      "\n",
+      '%cDISPATCH:',
+      'color: #03A9F4; font-weight: bold;',
+      action.type.replace(/\'/g, ''),
+      '\n',
       action.payload
     );
     // console.log(
