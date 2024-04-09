@@ -13,6 +13,9 @@ import { Button, IconButton, Tooltip } from '@mui/joy';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+
 const Root = () => {
   const navLink = [
     { id: 'home', path: '/', name: 'Home', icon: <HomeRoundedIcon /> },
@@ -99,6 +102,24 @@ const Root = () => {
             collapsed ? 'items-center' : 'items-end'
           )}>
           <ButtonMode />
+
+          <div>
+            {!collapsed ? (
+              <Button
+                variant="plain"
+                color="neutral"
+                startDecorator={<LoginRoundedIcon className="w-5 opacity-70" />}>
+                <span className="font-comfortaa"> Sing In</span>
+              </Button>
+            ) : (
+              <Tooltip title="Expand" placement="right" arrow>
+                <IconButton>
+                  <LoginRoundedIcon className="w-5 opacity-70" />
+                </IconButton>
+              </Tooltip>
+            )}
+          </div>
+
           <div onClick={() => setCollapsed(!collapsed)}>
             {!collapsed ? (
               <Button

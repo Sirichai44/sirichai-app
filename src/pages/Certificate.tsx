@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Grid, Modal } from '@mui/joy';
 
-import { CertificateList } from './components/List';
+import { CertificateList } from '@/hook/List';
 
 const Certificate = () => {
   const CerList = CertificateList();
