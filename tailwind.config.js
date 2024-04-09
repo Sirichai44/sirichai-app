@@ -6,7 +6,8 @@ export default {
     extend: {
       fontFamily: {
         nurito: ['Nurito', 'sans-serif'],
-        popins: ['Poppins', 'sans-serif']
+        popins: ['Poppins', 'sans-serif'],
+        comfortaa: ['Comfortaa', 'cursive']
       },
       colors: {
         'primary-light': '#374151',

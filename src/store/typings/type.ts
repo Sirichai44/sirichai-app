@@ -3,6 +3,10 @@ export interface IStore {
   word: string;
 }
 
-export interface IRootState {
-  test: string;
+export interface IErrorRoute {
+  data: string;
+  error: Error;
+  internal: boolean;
+  status: number;
+  statusText: string;
 }

@@ -33,6 +33,6 @@
 
 .blinking-cursor:after {
   content: '|';
-  font-weight: 200;
+  font-weight: 300;
   animation: blink 1.5s infinite;
 }
