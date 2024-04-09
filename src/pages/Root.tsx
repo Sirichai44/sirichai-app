@@ -63,7 +63,7 @@ const Root = () => {
               ) : (
                 <>
                   <AccountCircleIcon />
-                  <span className="mt-1 ml-1 font-bold">Sirichai</span>
+                  <span className="ml-1 font-bold ">Sirichai</span>
                 </>
               )}
             </div>

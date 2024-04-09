@@ -20,27 +20,9 @@ const Login = () => {
       </div>
 
       <form className="flex flex-col justify-center">
-        <Input
-          className="my-3"
-          sx={{
-            '--Input-focusedHighlight': '#a1a1aa !important'
-          }}
-          placeholder="Email"
-        />
-        <Input
-          className="my-3"
-          sx={{
-            '--Input-focusedHighlight': '#a1a1aa !important'
-          }}
-          placeholder="Password"
-        />
-        <Input
-          className="my-3"
-          sx={{
-            '--Input-focusedHighlight': '#a1a1aa !important'
-          }}
-          placeholder="Confirm Password"
-        />
+        <Input className="my-3 input-focused-highlight" placeholder="Email" />
+        <Input className="my-3 input-focused-highlight" placeholder="Password" />
+        <Input className="my-3 input-focused-highlight" placeholder="Confirm Password" />
         <Button variant="plain" color="neutral">
           Sign Up
         </Button>
