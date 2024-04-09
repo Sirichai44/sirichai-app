@@ -17,6 +17,10 @@
     overflow-wrap: anywhere;
     word-break: normal;
   }
+
+  .transition-width {
+    transition-property: width;
+  }
 }
 
 @keyframes blink {
