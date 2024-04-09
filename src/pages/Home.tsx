@@ -146,7 +146,8 @@ const Home = () => {
 
                 <ButtonMode />
               </div>
-              <div className="flex justify-end h-full">
+
+              <div className="flex justify-end h-full mt-10">
                 <div className="flex items-end w-full">
                   <div className="">
                     {contactLink.map((item) => (
