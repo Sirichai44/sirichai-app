@@ -13,6 +13,7 @@ type (
 		SecretKey  string
 		ExpireTime time.Duration
 		Database   Database
+		Server     Server
 	}
 
 	Database struct {
@@ -21,6 +22,10 @@ type (
 		Databasename string
 		Username     string
 		Password     string
+	}
+
+	Server struct {
+		Port string
 	}
 )
 
@@ -39,6 +44,9 @@ func NewAppConfig() *AppConfig {
 		SecretKey:  viper.GetString("secret.key"),
 		ExpireTime: 24 * time.Hour,
 		Database:   getDatabase(),
+		Server: Server{
+			Port: viper.GetString("server.port"),
+		},
 	}
 }
 
@@ -47,7 +55,7 @@ func getDatabase() Database {
 		Host:         viper.GetString("mongo.host"),
 		Port:         viper.GetInt("mongo.port"),
 		Databasename: viper.GetString("mongo.database"),
-		Username: 	 viper.GetString("mongo.username"),
-		Password: 	 viper.GetString("mongo.password"),
+		Username:     viper.GetString("mongo.username"),
+		Password:     viper.GetString("mongo.password"),
 	}
 }

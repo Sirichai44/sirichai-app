@@ -28,5 +28,12 @@ func NewFiberAPI() *fiber.App {
 	f := fiber.New(Fiber)
 	f.Use(FiberCORS)
 
+	f.Get("/", func(c fiber.Ctx) error { 
+		return c.JSON(fiber.Map{
+			"message": "Hello, World!",
+		})
+	})
+	NewHandleAuth(f)
+
 	return f
 }
