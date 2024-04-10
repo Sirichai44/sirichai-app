@@ -9,12 +9,24 @@ const Blog = lazy(() => import('@/pages/Blog'));
 const About = lazy(() => import('@/pages/About'));
 const Certificate = lazy(() => import('@/pages/Certificate'));
 const Login = lazy(() => import('@/pages/Login'));
+const Register = lazy(() => import('@/pages/Register'));
+
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
     errorElement: <ErrorPage />,
-    children: [{ path: '/', element: <Home /> }]
+    children: [
+      { path: '/', element: <Home /> },
+      {
+        path: '/login',
+        element: <Login />
+      },
+      {
+        path: '/register',
+        element: <Register />
+      }
+    ]
   },
   {
     path: '/page',
@@ -27,7 +39,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/page/about',
-        element: <Login />
+        element: <About />
       },
       {
         path: '/page/certificate',

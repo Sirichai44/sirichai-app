@@ -109,7 +109,9 @@ const Root = () => {
                 variant="plain"
                 color="neutral"
                 startDecorator={<LoginRoundedIcon className="w-5 opacity-70" />}>
-                <span className="font-comfortaa"> Sing In</span>
+                <NavLink to="/login">
+                  <span className="font-comfortaa"> Sing In</span>
+                </NavLink>
               </Button>
             ) : (
               <Tooltip title="Expand" placement="right" arrow>

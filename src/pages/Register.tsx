@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { Input, Button, Grid } from '@mui/joy';
 import { NavLink } from 'react-router-dom';
 
-const Login = () => {
+const Register = () => {
   const form = useForm();
 
   return (
@@ -25,15 +25,19 @@ const Login = () => {
             </div>
           </NavLink>
           <form className="flex flex-col justify-center">
+            <Input className="my-3 input-focused-highlight" placeholder="Name" />
+            <Input className="my-3 input-focused-highlight" placeholder="Username" />
+
             <Input className="my-3 input-focused-highlight" placeholder="Email" />
             <Input className="my-3 input-focused-highlight" placeholder="Password" />
+            <Input className="my-3 input-focused-highlight" placeholder="Confirm Password" />
             <div className="flex items-center justify-between">
               <Button variant="plain" color="neutral">
-                <span className="text-lg">Sign In</span>
+                <span className="text-lg">Sign Up</span>
               </Button>
 
-              <NavLink to="/register" className="mt-1 text-xs text-blue-300">
-                register
+              <NavLink to="/login" className="mt-1 text-xs text-blue-300">
+                Login
               </NavLink>
             </div>
           </form>
@@ -43,4 +47,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
