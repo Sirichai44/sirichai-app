@@ -1,5 +1,6 @@
 server:
-  port: :8080
+  addr: localhost
+  port: 8080
 
 mongo:
   host: localhost
