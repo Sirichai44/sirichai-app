@@ -1,8 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { lazy } from 'react';
+import { Suspense, lazy } from 'react';
 import ErrorPage from '@/pages/ErrorPage';
-import SuspenseWrapper from './suspenseWrapper';
-import Loading from './Loading';
+import SuspenseWrapper from './SuspenseWrapper';
+import { LinearProgress } from '@mui/joy';
 
 const App = lazy(() => import('@/App'));
 const Home = lazy(() => import('@/pages/Home'));
@@ -16,8 +16,11 @@ const Register = lazy(() => import('@/pages/Register'));
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
-    errorElement: <ErrorPage />,
+    element: (
+      <Suspense fallback={<LinearProgress />}>
+        <App />
+      </Suspense>
+    ),
     children: [
       { path: '', element: <Home /> },
       {
@@ -31,7 +34,6 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Root />,
-        errorElement: <ErrorPage />,
         children: [
           {
             path: 'blog',
@@ -46,7 +48,8 @@ const router = createBrowserRouter([
             element: <Certificate />
           }
         ]
-      }
+      },
+      { path: '*', element: <ErrorPage /> } // 404 page
     ]
   }
 ]);

@@ -20,5 +20,7 @@ func NewAuthService(mgc *mongo.Collection) AuthService {
 }
 
 func (auth *authService) Create(ctx context.Context, dto dtos.DtoRegister) error {
+
+	
 	return nil
 }

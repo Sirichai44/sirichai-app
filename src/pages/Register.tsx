@@ -1,9 +1,10 @@
-import { useForm } from 'react-hook-form';
 import { Input, Button, Grid } from '@mui/joy';
 import { NavLink } from 'react-router-dom';
+import { RegisterSchema } from './components/schema/RegisterSchema';
+import useFormReact from '@/hook/useFormReact';
 
 const Register = () => {
-  const form = useForm();
+  const Form = useFormReact(RegisterSchema);
 
   return (
     <div className="flex items-center justify-center w-full h-screen">

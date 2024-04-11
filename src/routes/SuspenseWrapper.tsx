@@ -1,10 +1,10 @@
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
-import Loading from './Loading';
+import { LinearProgress } from '@mui/joy';
 
 function SuspenseWrapper() {
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<LinearProgress />}>
       <Outlet />
     </Suspense>
   );
