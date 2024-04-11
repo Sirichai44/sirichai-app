@@ -2,8 +2,8 @@ import { createBrowserRouter } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import ErrorPage from '@/pages/ErrorPage';
 import SuspenseWrapper from './SuspenseWrapper';
-import { LinearProgress } from '@mui/joy';
-import Loading from './Loading';
+// import { LinearProgress } from '@mui/joy';
+// import Loading from './Loading';
 
 const App = lazy(() => import('@/App'));
 const Home = lazy(() => import('@/pages/Home'));

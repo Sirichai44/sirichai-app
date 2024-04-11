@@ -1,8 +1,9 @@
 const useLogger = () => {
   return (storeAPI: any) => (next: any) => (action: any) => {
-    const stateBefore = storeAPI.getState();
+    // const stateBefore = storeAPI.getState();
     const result = next(action);
-    const stateAfter = storeAPI.getState();
+    // const stateAfter = storeAPI.getState();
+    console.log(storeAPI);
 
     // console.group("DISPATCH");
     console.log(

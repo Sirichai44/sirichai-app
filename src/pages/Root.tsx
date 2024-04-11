@@ -14,7 +14,7 @@ import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
-import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+// import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 
 const Root = () => {
   const navLink = [

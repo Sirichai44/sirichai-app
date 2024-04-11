@@ -10,7 +10,7 @@ import {
   List,
   ListItemButton,
   ModalClose,
-  Typography
+  useColorScheme
 } from '@mui/joy';
 // import { toast } from "react-toastify";
 import * as Action from '@/store/actions/action';
@@ -32,11 +32,12 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ButtonMode from './components/ButtonMode';
 import useIntervalText from '@/hook/useIntervalText';
 import Menu from '@mui/icons-material/Menu';
+
 const Home = () => {
   const dispatch = useDispatch<Dispatch<Action.Action>>();
   // const state = useSelector((state: Type.IStore) => state);
 
-  const { sm, md, lg, xl } = useResponsiveWidth();
+  const { sm, md, xl } = useResponsiveWidth();
 
   const word = `%c
   ██████╗  ██╗███╗   ██╗ ██████╗       ██╗██████╗ 
@@ -88,7 +89,7 @@ const Home = () => {
       icon: <GitHubIcon />
     }
   ];
-
+  const { mode } = useColorScheme();
   const names = ['Software Developer', '<Front End />'];
   const wordInterval = useIntervalText({ names, time: 200 });
   const [open, setOpen] = useState(false);
@@ -115,7 +116,7 @@ const Home = () => {
             open={open}
             onClose={() => setOpen(false)}
             sx={{
-              '& > div': { width: '180px' }
+              '& > div': { width: '180px', opacity: 0.6 }
             }}>
             <Box
               sx={{
@@ -143,9 +144,13 @@ const Home = () => {
                   component={NavLink}
                   to={item.path}
                   sx={{
-                    // border: '1px solid red',
                     margin: '0 14px',
-                    borderRadius: '9999px'
+                    borderRadius: '9999px',
+
+                    '&.active': {
+                      color: mode === 'light' ? 'gray.800' : 'zinc.400',
+                      backgroundColor: mode === 'light' ? '#e5e7eb' : '#27272a'
+                    }
                   }}>
                   {item.icon}
                   {item.name}
@@ -186,7 +191,7 @@ const Home = () => {
                 </div>
 
                 <div>
-                  <span className={`leading-relaxed ${!md && 'text-xs'}`}>
+                  <span className={`leading-relaxed ${!sm && 'text-xs'}`}>
                     I'm a software developer who is passionate about making web applications. I'm
                     currently working as a front-end developer at a company in Bangkok, Thailand. I
                     have a lot of experience in web development and I'm constantly learning new
@@ -195,27 +200,29 @@ const Home = () => {
                 </div>
               </div>
 
-              <div className={`flex flex-wrap items-center mt-14 ${!lg && 'justify-center'}`}>
-                {navLink.map((item) => (
-                  <NavLink
-                    className={({ isActive }) =>
-                      classNames(
-                        `${lg ? 'px-6' : 'px-3'}  pt-2 pb-1 my-4 mx-6 border-b-4 flex flex-row items-center text-sm text-gray-800 dark:text-gray-400 hover:border-b-4 hover:border-gray-200 dark:hover:border-zinc-800 `,
-                        isActive
-                          ? 'border-b-4 border-gray-400 drop-shadow-sm'
-                          : 'border-transparent'
-                      )
-                    }
-                    key={item.id}
-                    to={item.path}
-                    id={item.id}
-                    unstable_viewTransition>
-                    {lg ? <span>{item.name}</span> : <span>{item.icon}</span>}
-                  </NavLink>
-                ))}
+              {sm && (
+                <div className={`flex flex-wrap items-center mt-14`}>
+                  {navLink.map((item) => (
+                    <NavLink
+                      className={({ isActive }) =>
+                        classNames(
+                          `${md ? 'px-6' : 'px-3'}  pt-2 pb-1 my-4 mx-6 border-b-4 flex flex-row items-center text-sm text-gray-800 dark:text-gray-400 hover:border-b-4 hover:border-gray-200 dark:hover:border-zinc-800 `,
+                          isActive
+                            ? 'border-b-4 border-gray-400 drop-shadow-sm'
+                            : 'border-transparent'
+                        )
+                      }
+                      key={item.id}
+                      to={item.path}
+                      id={item.id}
+                      unstable_viewTransition>
+                      {sm ? <span>{item.name}</span> : <span>{item.icon}</span>}
+                    </NavLink>
+                  ))}
 
-                <ButtonMode />
-              </div>
+                  <ButtonMode />
+                </div>
+              )}
 
               <div className="flex justify-end h-full mt-10">
                 <div className="flex items-end w-full">
