@@ -1,6 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { lazy } from 'react';
 import ErrorPage from '@/pages/ErrorPage';
+import SuspenseWrapper from './suspenseWrapper';
+import Loading from './Loading';
 
 const App = lazy(() => import('@/App'));
 const Home = lazy(() => import('@/pages/Home'));
@@ -17,33 +19,33 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
-      { path: '/', element: <Home /> },
+      { path: '', element: <Home /> },
       {
-        path: '/login',
-        element: <Login />
+        path: '/auth/',
+        element: <SuspenseWrapper />,
+        children: [
+          { path: 'login', element: <Login /> },
+          { path: 'register', element: <Register /> }
+        ]
       },
       {
-        path: '/register',
-        element: <Register />
-      }
-    ]
-  },
-  {
-    path: '/page',
-    element: <Root />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: '/page/blog',
-        element: <Blog />
-      },
-      {
-        path: '/page/about',
-        element: <About />
-      },
-      {
-        path: '/page/certificate',
-        element: <Certificate />
+        path: '/',
+        element: <Root />,
+        errorElement: <ErrorPage />,
+        children: [
+          {
+            path: 'blog',
+            element: <Blog />
+          },
+          {
+            path: 'about',
+            element: <About />
+          },
+          {
+            path: 'certificate',
+            element: <Certificate />
+          }
+        ]
       }
     ]
   }

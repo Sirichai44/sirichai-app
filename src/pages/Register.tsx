@@ -36,7 +36,7 @@ const Register = () => {
                 <span className="text-lg">Sign Up</span>
               </Button>
 
-              <NavLink to="/login" className="mt-1 text-xs text-blue-300">
+              <NavLink to="/auth/login" className="mt-1 text-xs text-blue-300">
                 Login
               </NavLink>
             </div>

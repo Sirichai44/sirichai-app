@@ -46,19 +46,19 @@ const Home = () => {
     { id: 'home', path: '/', name: 'Home', icon: <HomeRoundedIcon /> },
     {
       id: 'blog',
-      path: '/page/blog',
+      path: '/blog',
       name: 'Blog',
       icon: <ModeCommentRoundedIcon />
     },
     {
       id: 'about',
-      path: '/page/about',
+      path: '/about',
       name: 'About',
       icon: <TagFacesRoundedIcon />
     },
     {
       id: 'certificate',
-      path: '/page/certificate',
+      path: '/certificate',
       name: 'Certificate',
       icon: <WorkspacePremiumRoundedIcon />
     }

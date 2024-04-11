@@ -21,19 +21,19 @@ const Root = () => {
     { id: 'home', path: '/', name: 'Home', icon: <HomeRoundedIcon /> },
     {
       id: 'blog',
-      path: '/page/blog',
+      path: '/blog',
       name: 'Blog',
       icon: <ModeCommentRoundedIcon />
     },
     {
       id: 'about',
-      path: '/page/about',
+      path: '/about',
       name: 'About',
       icon: <TagFacesRoundedIcon />
     },
     {
       id: 'certificate',
-      path: '/page/certificate',
+      path: '/certificate',
       name: 'Certificate',
       icon: <WorkspacePremiumRoundedIcon />
     }
@@ -109,7 +109,7 @@ const Root = () => {
                 variant="plain"
                 color="neutral"
                 startDecorator={<LoginRoundedIcon className="w-5 opacity-70" />}>
-                <NavLink to="/login">
+                <NavLink to="/auth/login">
                   <span className="font-comfortaa"> Sing In</span>
                 </NavLink>
               </Button>
