@@ -3,6 +3,7 @@ import { Suspense, lazy } from 'react';
 import ErrorPage from '@/pages/ErrorPage';
 import SuspenseWrapper from './SuspenseWrapper';
 import { LinearProgress } from '@mui/joy';
+import Loading from './Loading';
 
 const App = lazy(() => import('@/App'));
 const Home = lazy(() => import('@/pages/Home'));
@@ -17,7 +18,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: (
-      <Suspense fallback={<LinearProgress />}>
+      <Suspense fallback={<SuspenseWrapper />}>
         <App />
       </Suspense>
     ),

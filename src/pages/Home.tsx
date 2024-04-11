@@ -1,11 +1,20 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dispatch } from 'redux';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { Grid, IconButton } from '@mui/joy';
+import {
+  Box,
+  Drawer,
+  Grid,
+  IconButton,
+  List,
+  ListItemButton,
+  ModalClose,
+  Typography
+} from '@mui/joy';
 // import { toast } from "react-toastify";
 import * as Action from '@/store/actions/action';
-import * as Type from '@/store/typings/type';
+// import * as Type from '@/store/typings/type';
 
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
@@ -22,11 +31,12 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ButtonMode from './components/ButtonMode';
 import useIntervalText from '@/hook/useIntervalText';
-
+import Menu from '@mui/icons-material/Menu';
 const Home = () => {
   const dispatch = useDispatch<Dispatch<Action.Action>>();
-  const state = useSelector((state: Type.IStore) => state);
-  const { md, lg, xl } = useResponsiveWidth();
+  // const state = useSelector((state: Type.IStore) => state);
+
+  const { sm, md, lg, xl } = useResponsiveWidth();
 
   const word = `%c
   ██████╗  ██╗███╗   ██╗ ██████╗       ██╗██████╗ 
@@ -81,11 +91,71 @@ const Home = () => {
 
   const names = ['Software Developer', '<Front End />'];
   const wordInterval = useIntervalText({ names, time: 200 });
-
+  const [open, setOpen] = useState(false);
   const [love, setLove] = useState(false);
   return (
     <div className="flex items-center justify-center w-full h-screen min-h-full">
-      <div className="w-5/6 h-3/6">
+      {!sm && (
+        <React.Fragment>
+          <IconButton
+            variant="outlined"
+            color="neutral"
+            onClick={() => setOpen(true)}
+            sx={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              zIndex: 999,
+              ml: 2,
+              mt: 2
+            }}>
+            <Menu />
+          </IconButton>
+          <Drawer
+            open={open}
+            onClose={() => setOpen(false)}
+            sx={{
+              '& > div': { width: '180px' }
+            }}>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 0.5,
+                ml: 'auto',
+                mt: 1,
+                mr: 2
+              }}>
+              <ModalClose id="close-icon" sx={{ position: 'initial' }} />
+            </Box>
+
+            <List
+              size="lg"
+              component="nav"
+              sx={{
+                flex: 'none',
+                fontSize: 'xl',
+                '& > div': { justifyContent: 'center' }
+              }}>
+              {navLink.map((item) => (
+                <ListItemButton
+                  key={item.id}
+                  component={NavLink}
+                  to={item.path}
+                  sx={{
+                    // border: '1px solid red',
+                    margin: '0 14px',
+                    borderRadius: '9999px'
+                  }}>
+                  {item.icon}
+                  {item.name}
+                </ListItemButton>
+              ))}
+            </List>
+          </Drawer>
+        </React.Fragment>
+      )}
+      <div className="w-5/6">
         <Grid
           container
           spacing={{ xs: 2, md: 3 }}
