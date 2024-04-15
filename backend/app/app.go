@@ -9,13 +9,13 @@ import (
 	"os/signal"
 	"strconv"
 	"syscall"
-	"time"
 
 	"myapp/apis"
 	"myapp/config"
 	"myapp/drivers"
+	"myapp/services"
 
-	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v2"
 	"github.com/spf13/cobra"
 	"golang.org/x/sync/errgroup"
 )
@@ -47,9 +47,12 @@ func NewAppRoot() *cobra.Command {
 				return err
 			}
 
-			ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-			defer cancel()
-			app.Runner(ctx)
+			ctx := context.Background()
+
+			if err := app.Runner(ctx); err != nil {
+				slog.Error("Server", slog.String("entry", "app"), slog.String("run", "failed"))
+				return err
+			}
 
 			sig := make(chan os.Signal, 1)
 			signal.Notify(sig, os.Interrupt, syscall.SIGTERM)
@@ -70,11 +73,15 @@ func NewAppRoot() *cobra.Command {
 func NewApp(conf *config.AppConfig) (Apps, error) {
 	mgc, err := drivers.MongoDBConn(conf.Database)
 	if err != nil {
+		slog.Error("MongoDB", slog.String("entry", conf.Database.Host+":"+fmt.Sprintf("%d", conf.Database.Port)), slog.String("connect", "failed"))
 		return nil, err
 	}
 	slog.Info("MongoDB", slog.String("entry", conf.Database.Host+":"+fmt.Sprintf("%d", conf.Database.Port)), slog.String("connect", "successfully"))
 
-	fb := apis.NewFiberAPI(mgc)
+	srvAuth := services.NewAuthService(mgc.Collection("auth"))
+
+	//tracking 
+	fb := apis.NewFiberAPI(mgc, srvAuth)
 
 	return &app{
 		config: conf,
@@ -88,14 +95,19 @@ func (a *app) Runner(ctx context.Context) error {
 
 	g.Go(func() error {
 		path := net.JoinHostPort("0.0.0.0", strconv.Itoa(a.config.Server.Port))
-		fmt.Println("Server is running on", path)
+		slog.Info("Server is running on", slog.String("entry", path))
 		return a.fiber.Listen(path)
 	})
 
 	g.Go(func() error {
 		<-c.Done()
-		return a.fiber.ShutdownWithContext(c)
+		return a.fiber.Server().ShutdownWithContext(c)
 	})
+
+	if err := g.Wait(); err != nil {
+		slog.Error("Server", slog.String("entry", "app"), slog.String("run", "failed"))
+		return err
+	}
 
 	return g.Wait()
 }

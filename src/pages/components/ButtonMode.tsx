@@ -1,10 +1,15 @@
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { IconButton } from '@mui/joy';
 import { useColorScheme } from '@mui/joy';
 
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
-const ButtonMode = () => {
+
+interface ButtonModeProps {
+  mobile?: boolean;
+}
+
+const ButtonMode: FC<ButtonModeProps> = ({ mobile }) => {
   const { mode, setMode } = useColorScheme();
 
   useEffect(() => {
@@ -19,12 +24,13 @@ const ButtonMode = () => {
 
   return (
     <IconButton
-      style={{ height: 40, width: 40, paddingLeft: 24, paddingRight: 24 }}
+      style={{ height: 40, width: mobile ? 80 : 40, paddingLeft: 10, paddingRight: 10 }}
       className={`rounded-full`}
       onClick={() => {
         setMode(mode === 'light' ? 'dark' : 'light');
       }}>
       {mode === 'light' ? <LightModeIcon /> : <DarkModeIcon />}
+      {mobile && <span>{mode === 'light' ? 'Light' : 'Dark'}</span>}
     </IconButton>
   );
 };

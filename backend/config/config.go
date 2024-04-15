@@ -32,6 +32,7 @@ type (
 		addr string
 		Port int
 	}
+
 )
 
 func NewAppConfig(file string) (*AppConfig, error) {
@@ -50,8 +51,9 @@ func NewAppConfig(file string) (*AppConfig, error) {
 		viper.SetConfigFile(file)
 	} else {
 		viper.SetConfigName("config")
-		viper.SetConfigType("yml")
 		viper.AddConfigPath(filepath.Join(filepath.Dir(ext), "conf"))
+		viper.AddConfigPath(filepath.Join("cmd", "conf"))
+		viper.SetConfigType("yml")
 	}
 
 	viper.AutomaticEnv()
@@ -62,8 +64,8 @@ func NewAppConfig(file string) (*AppConfig, error) {
 	}
 
 	return &AppConfig{
-		HostID: 	 info.HostID,
-		HostnName:   info.Hostname,
+		HostID:     info.HostID,
+		HostnName:  info.Hostname,
 		SecretKey:  viper.GetString("secret.key"),
 		ExpireTime: 24 * time.Hour,
 		Database:   getDatabase(),

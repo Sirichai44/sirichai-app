@@ -14,6 +14,7 @@ import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
+import axios from 'axios';
 // import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 
 const Root = () => {
@@ -48,13 +49,28 @@ const Root = () => {
       setCollapsed(false);
     }
   }, [md]);
+  useEffect(() => {
+    axios({
+      method: 'GET',
+      url: '/api/v3',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then((res) => {
+        console.log('res', res.data);
+      })
+      .catch((err) => {
+        console.error('err', err.response.data);
+      });
+  }, []);
   return (
     <div className="flex w-full h-screen">
       <div
         className={`${collapsed ? 'w-16' : 'w-56'} transition-width duration-300 h-full flex flex-col`}>
         <div className="h-auto">
           <div
-            className={`flex ${collapsed && 'flex-col-reverse'} items-center justify-between mx-4 mt-8`}>
+            className={`flex ${collapsed && 'flex-col-reverse'} items-center justify-between mx-4 mt-8 mb-4`}>
             <div className="flex">
               {collapsed ? (
                 <Tooltip title="Sirichai" placement="right" arrow>
@@ -72,7 +88,7 @@ const Root = () => {
             <NavLink
               className={({ isActive }) =>
                 classNames(
-                  `px-2 py-2 my-4 ${!collapsed ? 'mx-4' : 'mx-2 justify-center'} rounded-full border flex flex-row items-center text-lg text-gray-800 dark:text-gray-200 hover:bg-gray-100 hover:border-gray-200 dark:hover:border-zinc-700 dark:hover:bg-zinc-900`,
+                  `px-2 py-2 ${!collapsed ? 'mx-4' : 'mx-2 justify-center'} rounded-lg border flex flex-row items-center text-md text-gray-800 dark:text-gray-200 hover:bg-gray-100 hover:border-gray-200 dark:hover:border-zinc-700 dark:hover:bg-zinc-900`,
                   isActive
                     ? 'bg-white drop-shadow-sm dark:bg-zinc-800 border-gray-200 dark:border-zinc-700'
                     : 'border-transparent'
@@ -83,7 +99,7 @@ const Root = () => {
               id={item.id}
               unstable_viewTransition>
               {collapsed ? (
-                <Tooltip title={item.name} placement="right" arrow>
+                <Tooltip title={item.name} placement="right" size="md" arrow>
                   <span>{item.icon}</span>
                 </Tooltip>
               ) : (

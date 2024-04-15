@@ -1,11 +1,45 @@
 version: '3.9'
 
 services:
-  mongo:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /app
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+    environment:
+      #server
+      SERVER_ADDR: localhost
+      SERVER_PORT: 8080
+      #mongo
+      MONGO_HOST: mongo_app
+      MONGO_PORT: 27017
+      MONGO_DATABASE: app
+      MONGO_USERNAME: root
+      MONGO_PASSWORD: P@ssw0rd
+      #secret key
+      SECRET_KEY: sirichai-44-secret-key
+    depends_on:
+      - mongo_app
+
+  mongo_app:
     image: mongo
-    container_name: mongo
+    container_name: mongo_app
+    restart: always
     ports:
       - "27017:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: P@ssw0rd
+
+  jaeger_app:
+    image: jaegertracing/all-in-one
+    container_name: jaeger_app
+    restart: always
+    ports:
+      - "16686:16686"
+      - "6831:6831/udp"
+      - "6832:6832/udp"

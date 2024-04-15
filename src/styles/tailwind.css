@@ -41,6 +41,9 @@
   animation: blink 1.5s infinite;
 }
 
+.input-focused-highlight-error {
+  --Input-focusedHighlight: #991b1b !important;
+}
 .input-focused-highlight {
   --Input-focusedHighlight: #a1a1aa !important;
 }

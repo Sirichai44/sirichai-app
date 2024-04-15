@@ -135,7 +135,7 @@ const Home = () => {
               component="nav"
               sx={{
                 flex: 'none',
-                fontSize: 'xl',
+                fontSize: 'md',
                 '& > div': { justifyContent: 'center' }
               }}>
               {navLink.map((item) => (
@@ -145,11 +145,10 @@ const Home = () => {
                   to={item.path}
                   sx={{
                     margin: '0 14px',
-                    borderRadius: '9999px',
-
+                    borderRadius: 'md',
                     '&.active': {
-                      color: mode === 'light' ? 'gray.800' : 'zinc.400',
-                      backgroundColor: mode === 'light' ? '#e5e7eb' : '#27272a'
+                      backgroundColor: mode === 'light' ? 'white' : '#27272a',
+                      border: mode === 'light' ? '1px solid #e5e7eb' : '1px solid #3f3f46'
                     }
                   }}>
                   {item.icon}
@@ -157,6 +156,10 @@ const Home = () => {
                 </ListItemButton>
               ))}
             </List>
+
+            <div className="flex items-center justify-end pr-4">
+              <ButtonMode mobile={!sm} />
+            </div>
           </Drawer>
         </React.Fragment>
       )}
