@@ -11,7 +11,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/recover"
-	"github.com/opentracing/opentracing-go"
 )
 
 var (
@@ -33,19 +32,6 @@ var (
 func NewFiberAPI(mgc *drivers.MongoDBClient, srvAuth services.AuthService) *fiber.App {
 	f := fiber.New()
 	f.Use(FiberCORS)
-
-	f.Use(func(c *fiber.Ctx) error {
-		// เริ่ม span ใหม่
-		span, ctx := opentracing.StartSpanFromContext(c.Context(), "middleware")
-		defer span.Finish()
-
-		// ส่งต่อ context ที่มี span ไปยัง handler ถัดไป
-		c.Context().SetUserValue("span", span)
-		c.Context().SetUserValue("ctx", ctx)
-
-		// ดำเนินการต่อไป
-		return c.Next()
-	})
 
 	f.Use(recover.New())
 	f.Use(func(c *fiber.Ctx) error {
