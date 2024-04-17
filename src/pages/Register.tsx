@@ -1,11 +1,18 @@
+import { Dispatch } from 'redux';
+import { useDispatch } from 'react-redux';
 import { Button, Grid } from '@mui/joy';
 import { NavLink } from 'react-router-dom';
 import { RegisterSchema } from './components/schema/RegisterSchema';
 import useFormReact from '@/hook/useFormReact';
 import GenInput from './components/Input';
 import * as srv from '@/services/authService';
+import * as actions from '@/store/typings/auth/actions';
+import { useSelector } from 'react-redux';
+import { IStateAuth } from '@/store/typings/auth/types';
+import { IRootState } from '@/store/typings/root';
 
 const Register = () => {
+  const dispatch = useDispatch<Dispatch<actions.AuthAction>>();
   const Form = useFormReact(RegisterSchema);
 
   const rgNameField = [
@@ -35,19 +42,17 @@ const Register = () => {
   const handleSummit = Form.handleSubmit(async (data) => {
     const isValid = await Form.trigger();
     if (isValid) {
-      console.log('submit', Form.getValues());
-      srv
-        .CallRegister(data)
-        .then((res) => {
-          console.log('res', res);
-        })
-        .catch((err) => {
-          console.error('err', err.response);
-        });
+      console.log('submit', data);
+      dispatch({ type: 'CALL_REGISTER', payload: data });
     } else {
       console.log('error', Form.formState.errors);
     }
   });
+
+  const state = useSelector((state: IStateAuth) => state);
+  const state2 = useSelector((state: IRootState) => state);
+  console.log('state', state);
+  console.log('state2', state2);
   return (
     <div className="flex items-center justify-center w-full h-screen ">
       <div className="w-4/12">

@@ -32,7 +32,7 @@ const GenInput: FC<InputProps> = (props) => {
               }
             }}
             error={!!props.error}
-            endDecorator={props.error !== '' ? ErrorInput(props.error) : null}
+            // endDecorator={props.error !== '' ? ErrorInput(props.error) : null}
             slots={{ input: InnerInput }}
             slotProps={{
               input: {
@@ -49,11 +49,11 @@ const GenInput: FC<InputProps> = (props) => {
             className={`my-3 capitalize ${props.error !== '' ? 'input-focused-highlight-error' : 'input-focused-highlight'}`}
           />
 
-          {/* {props.error !== '' && (
-            <Tooltip title={props.error} placement="bottom" arrow>
-              <InfoOutlined />
-            </Tooltip>
-          )} */}
+          {props.error !== '' && (
+            <div className="mt-1 text-xs font-light text-red-400 dark:text-red-600 max-w-60">
+              {props.error}
+            </div>
+          )}
         </FormControl>
       )}
     />
@@ -62,13 +62,13 @@ const GenInput: FC<InputProps> = (props) => {
 
 export default GenInput;
 
-const ErrorInput = (error: string) => {
-  return (
-    <Tooltip title={error} placement="top-end" variant="outlined" sx={{ maxWidth: '240px' }} arrow>
-      <InfoOutlined style={{ color: '#991b1b' }} />
-    </Tooltip>
-  );
-};
+// const ErrorInput = (error: string) => {
+//   return (
+//     <Tooltip title={error} placement="top-end" variant="outlined" sx={{ maxWidth: '240px' }} arrow>
+//       <InfoOutlined style={{ color: '#f87171' }} />
+//     </Tooltip>
+//   );
+// };
 const StyledInput = styled('input')({
   border: 'none', // remove the native input border
   minWidth: 0, // remove the native input width
@@ -116,7 +116,8 @@ const StyledLabel = styled('label')(({ theme }) => ({
   position: 'absolute',
   lineHeight: 1,
   top: 'calc((var(--Input-minHeight) - 0.75em) / 2)',
-  color: theme.vars.palette.text.tertiary,
+  // color: theme.vars.palette.text.tertiary,
+  color: 'var(--Input-focusedHighlight)',
   fontWeight: theme.vars.fontWeight.sm,
   fontSize: '0.9rem'
   // transition: 'all 150ms cubic-bezier(0.4, 0, 0.2, 1)'

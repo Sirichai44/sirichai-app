@@ -36,14 +36,16 @@ func HandleBodyParser[REQ, RES any](handle func(REQ) (RES, error)) fiber.Handler
 		const msg = "HandleBodyParser"
 		var request REQ
 
+		// parse request
+		if err := c.BodyParser(&request); err != nil {
+			slog.Error(msg+"-BodyParser", "error", err)
+			return fiber.ErrBadRequest
+		}
+
 		// validate
 		if err := Validation(request); len(err) > 0 {
-			slog.Debug(msg+"-Validation", "payload", request)
-			return c.JSON(fiber.Map{
-				"status":  fiber.StatusBadRequest,
-				"message": "Validation failed",
-				"results": nil,
-			})
+			slog.Error(msg+"-Validation", "payload", request)
+			return fiber.ErrBadRequest
 		}
 
 		// Todo implement function handler.
@@ -52,15 +54,6 @@ func HandleBodyParser[REQ, RES any](handle func(REQ) (RES, error)) fiber.Handler
 			return err
 		}
 
-		t := func(v any) any {
-			ref := reflect.ValueOf(v)
-			if (ref.Kind() == reflect.Pointer || ref.Kind() == reflect.Slice) && (v == nil || ref.IsNil()) {
-				return []string{}
-			} else {
-				return v
-			}
-		}(res)
-
-		return c.JSON(t)
+		return c.JSON(res)
 	}
 }

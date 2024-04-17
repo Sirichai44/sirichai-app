@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { IconButton } from '@mui/joy';
 import { useColorScheme } from '@mui/joy';
 
@@ -11,16 +11,6 @@ interface ButtonModeProps {
 
 const ButtonMode: FC<ButtonModeProps> = ({ mobile }) => {
   const { mode, setMode } = useColorScheme();
-
-  useEffect(() => {
-    const root = document.documentElement;
-
-    if (mode === 'light') {
-      root.classList.remove('dark');
-    } else if (mode === 'dark') {
-      root.classList.add('dark');
-    }
-  }, [mode]);
 
   return (
     <IconButton

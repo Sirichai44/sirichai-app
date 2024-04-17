@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -63,10 +62,6 @@ func NewAppConfig(file string) (*AppConfig, error) {
 	if err := viper.ReadInConfig(); err != nil {
 		return nil, err
 	}
-
-	fmt.Println()
-	fmt.Println("server config", viper.GetString("server.addr"), viper.GetInt("server.port"))
-	fmt.Println()
 
 	return &AppConfig{
 		HostID:     info.HostID,

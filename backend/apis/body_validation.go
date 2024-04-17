@@ -13,7 +13,7 @@ import (
  
  func Validation(i any) []*dtos.ErrorValidation {
 	 var errs []*dtos.ErrorValidation
- 
+	
 	 if err := val.Struct(i); err != nil {
 		 var ve validator.ValidationErrors
 		 if errors.As(err, &ve) {

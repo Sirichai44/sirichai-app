@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Dispatch } from 'redux';
-import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import {
   Box,
@@ -13,8 +12,7 @@ import {
   useColorScheme
 } from '@mui/joy';
 // import { toast } from "react-toastify";
-import * as Action from '@/store/actions/action';
-// import * as Type from '@/store/typings/type';
+import * as Type from '@/store/typings/root';
 
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
@@ -34,24 +32,20 @@ import useIntervalText from '@/hook/useIntervalText';
 import Menu from '@mui/icons-material/Menu';
 
 const Home = () => {
-  const dispatch = useDispatch<Dispatch<Action.Action>>();
-  // const state = useSelector((state: Type.IStore) => state);
-
   const { sm, md, xl } = useResponsiveWidth();
 
-  const word = `%c
-  ██████╗  ██╗███╗   ██╗ ██████╗       ██╗██████╗ 
-  ██╔════╝ ██║████╗  ██║██╔═══██╗     ██╔╝╚════██╗
-  ██║  ███╗██║██╔██╗ ██║██║   ██║    ██╔╝  █████╔╝
-  ██║   ██║██║██║╚██╗██║██║   ██║    ╚██╗  ╚═══██╗
-  ╚██████╔╝██║██║ ╚████║╚██████╔╝     ╚██╗██████╔╝
-   ╚═════╝ ╚═╝╚═╝  ╚═══╝ ╚═════╝       ╚═╝╚═════╝\n\nPlease like and follow me on github: https://github.com/Sirichai44
-`;
+  //   const word = `%c
+  //   ██████╗  ██╗███╗   ██╗ ██████╗       ██╗██████╗
+  //   ██╔════╝ ██║████╗  ██║██╔═══██╗     ██╔╝╚════██╗
+  //   ██║  ███╗██║██╔██╗ ██║██║   ██║    ██╔╝  █████╔╝
+  //   ██║   ██║██║██║╚██╗██║██║   ██║    ╚██╗  ╚═══██╗
+  //   ╚██████╔╝██║██║ ╚████║╚██████╔╝     ╚██╗██████╔╝
+  //    ╚═════╝ ╚═╝╚═╝  ╚═══╝ ╚═════╝       ╚═╝╚═════╝\n\nPlease like and follow me on github: https://github.com/Sirichai44
+  // `;
   useEffect(() => {
-    console.log(word, 'font-family:monospace;color:#1976d2;font-size:12px;');
-    dispatch({ type: 'TEST_HELLO_SAGA', payload: 'Hello World' });
-    dispatch({ type: 'TEST_ACTION', payload: 'Hello World' });
+    // console.log(word, 'font-family:monospace;color:#1976d2;font-size:12px;');
   }, []);
+  const { mode } = useColorScheme();
 
   const navLink = [
     { id: 'home', path: '/', name: 'Home', icon: <HomeRoundedIcon /> },
@@ -89,7 +83,7 @@ const Home = () => {
       icon: <GitHubIcon />
     }
   ];
-  const { mode } = useColorScheme();
+
   const names = ['Software Developer', '<Front End />'];
   const wordInterval = useIntervalText({ names, time: 200 });
   const [open, setOpen] = useState(false);

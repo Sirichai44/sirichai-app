@@ -3,6 +3,7 @@ package apis
 import (
 	"context"
 	"errors"
+	"fmt"
 	"log/slog"
 	"time"
 
@@ -22,12 +23,13 @@ type auth struct {
 }
 
 type Context struct {
-	Status  int         `json:"status"`
-	Message string      `json:"message"`
+	Status  int      `json:"status"`
+	Message string   `json:"message"`
 	Results interface{} `json:"results"`
 }
 
 func NewContext(code int, msg string, res any) *Context {
+	fmt.Printf("res: %v", res)
 	return &Context{
 		Status:  code,
 		Message: msg,
@@ -50,7 +52,7 @@ func NewHandleAuth(f fiber.Router, mgc *drivers.MongoDBClient, srvAuth services.
 	g.Post("/register", HandleBodyParser(auth.Register))
 }
 
-func (a *auth) Register( dto dtos.DtoRegister) (*Context, error) {
+func (a *auth) Register(dto dtos.DtoRegister) (*Context, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	find, err := a.srv.FindOneKeyValue(ctx, "email", dto.Email)
@@ -84,10 +86,11 @@ func (a *auth) Register( dto dtos.DtoRegister) (*Context, error) {
 		slog.Error("Register", slog.String("entry", "Create"), slog.String("register", "failed"))
 		return nil, err
 	}
+
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"email":    rgt.Email,
 		"username": rgt.Username,
-		"exp":      time.Now().Add(time.Hour * 24).Unix(),
+		"exp":      time.Now().Add(time.Hour * 24),
 	})
 
 	tokenString, err := token.SignedString([]byte("sirichai-44-secret-key"))
@@ -95,8 +98,14 @@ func (a *auth) Register( dto dtos.DtoRegister) (*Context, error) {
 		slog.Error("Register", slog.String("entry", "SignedString"), slog.String("token", "failed"))
 		return nil, err
 	}
-
+	fmt.Println()
+	fmt.Println("tokenString: ", tokenString)
+	fmt.Println()
 	slog.Info("Register", slog.String("id", rgt.ID.Hex()), slog.String("register", "successfully"))
 
-	return NewContext(fiber.StatusCreated, "register successfully", struct{ token string }{token: tokenString}), nil
+	return NewContext(fiber.StatusCreated, "register successfully",
+		fiber.Map{
+			"token": tokenString,
+		},
+	), nil
 }

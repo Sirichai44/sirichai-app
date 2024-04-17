@@ -42,7 +42,7 @@
 }
 
 .input-focused-highlight-error {
-  --Input-focusedHighlight: #991b1b !important;
+  --Input-focusedHighlight: var(--text-error-color) !important;
 }
 .input-focused-highlight {
   --Input-focusedHighlight: #a1a1aa !important;

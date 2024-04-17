@@ -5,16 +5,19 @@ import ModeCommentRoundedIcon from '@mui/icons-material/ModeCommentRounded';
 import classNames from 'classnames';
 import { NavLink, Outlet } from 'react-router-dom';
 import ButtonMode from './components/ButtonMode';
-import { Suspense, useEffect } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import useResponsiveWidth from '@/hook/useResponsiveWidth';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
 import { Button, IconButton, Tooltip } from '@mui/joy';
-
+import { useSelector } from 'react-redux';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
-import axios from 'axios';
+import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
+import { IStateAuth } from '@/store/typings/auth/types';
+import { IRootState } from '@/store/typings/root';
+
 // import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 
 const Root = () => {
@@ -40,30 +43,22 @@ const Root = () => {
     }
   ];
   const { md } = useResponsiveWidth();
-  const [collapsed, setCollapsed] = useLocalStorage('nav-collapsed', false);
+  const colFromLocal = JSON.parse(localStorage.getItem('nav-collapsed') || 'false');
+  const [collapsed, setCollapsed] = useLocalStorage('nav-collapsed', colFromLocal);
 
   useEffect(() => {
     if (!md) {
       setCollapsed(true);
     } else {
-      setCollapsed(false);
+      setCollapsed(colFromLocal);
     }
   }, [md]);
-  useEffect(() => {
-    axios({
-      method: 'GET',
-      url: '/api/v3',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then((res) => {
-        console.log('res', res.data);
-      })
-      .catch((err) => {
-        console.error('err', err.response.data);
-      });
-  }, []);
+
+  const state = useSelector((state: IStateAuth) => state);
+  const state2 = useSelector((state: IRootState) => state);
+  console.log('state', state);
+  console.log('state2', state2);
+
   return (
     <div className="flex w-full h-screen">
       <div
@@ -79,7 +74,7 @@ const Root = () => {
               ) : (
                 <>
                   <AccountCircleIcon />
-                  <span className="ml-1 font-bold ">Sirichai</span>
+                  <span className="ml-1 font-bold ">{state?.profile?.username || ''}</span>
                 </>
               )}
             </div>
@@ -118,7 +113,26 @@ const Root = () => {
             collapsed ? 'items-center' : 'items-end'
           )}>
           <ButtonMode />
-
+          <div>
+            {!collapsed ? (
+              <Button
+                variant="plain"
+                color="neutral"
+                startDecorator={<SettingsRoundedIcon className="w-5 opacity-70" />}>
+                <NavLink to="/setting">
+                  <span className="font-comfortaa">Setting</span>
+                </NavLink>
+              </Button>
+            ) : (
+              <Tooltip title="Setting" placement="right" arrow>
+                <NavLink to="/setting">
+                  <IconButton>
+                    <SettingsRoundedIcon className="w-5 opacity-70" />
+                  </IconButton>
+                </NavLink>
+              </Tooltip>
+            )}
+          </div>
           <div>
             {!collapsed ? (
               <Button
@@ -130,10 +144,12 @@ const Root = () => {
                 </NavLink>
               </Button>
             ) : (
-              <Tooltip title="Expand" placement="right" arrow>
-                <IconButton>
-                  <LoginRoundedIcon className="w-5 opacity-70" />
-                </IconButton>
+              <Tooltip title="Login" placement="right" arrow>
+                <NavLink to="/auth/login">
+                  <IconButton>
+                    <LoginRoundedIcon className="w-5 opacity-70" />
+                  </IconButton>
+                </NavLink>
               </Tooltip>
             )}
           </div>
@@ -154,24 +170,6 @@ const Root = () => {
               </Tooltip>
             )}
           </div>
-          {/* <div
-            className={classNames(' py-3 group-hover:flex flex-col justify-center items-center')}
-            onClick={() => setCollapsed(!collapsed)}>
-            {!collapsed ? (
-              <Button
-                variant="plain"
-                color="neutral"
-                startDecorator={<ChevronLeftRoundedIcon className="w-5 opacity-70" />}>
-                Collapse
-              </Button>
-            ) : (
-              <Tooltip title="Expand" placement="right" arrow>
-                <IconButton>
-                  <ChevronRightRoundedIcon className="w-5 opacity-70" />
-                </IconButton>
-              </Tooltip>
-            )}
-          </div> */}
         </div>
       </div>
 

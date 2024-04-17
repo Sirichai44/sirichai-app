@@ -1,6 +1,7 @@
-import { all, fork } from "redux-saga/effects";
+import { all, fork } from 'redux-saga/effects';
 
-import { rootHome } from "./home";
+import { rootAuth } from './auth';
+
 export default function* rootSaga() {
-  yield all([fork(rootHome)]);
+  yield all([fork(rootAuth)]);
 }

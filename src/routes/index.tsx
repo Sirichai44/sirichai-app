@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import ErrorPage from '@/pages/ErrorPage';
 import SuspenseWrapper from './SuspenseWrapper';
+import AuthProvider from './AuthProvider';
 // import { LinearProgress } from '@mui/joy';
 // import Loading from './Loading';
 
@@ -13,6 +14,7 @@ const About = lazy(() => import('@/pages/About'));
 const Certificate = lazy(() => import('@/pages/Certificate'));
 const Login = lazy(() => import('@/pages/Login'));
 const Register = lazy(() => import('@/pages/Register'));
+const Setting = lazy(() => import('@/pages/Setting'));
 
 const router = createBrowserRouter([
   {
@@ -47,6 +49,14 @@ const router = createBrowserRouter([
           {
             path: 'certificate',
             element: <Certificate />
+          },
+          {
+            path: 'setting',
+            element: (
+              <AuthProvider>
+                <Setting />
+              </AuthProvider>
+            )
           }
         ]
       },

@@ -1,6 +1,6 @@
 import { NavLink, useRouteError } from 'react-router-dom';
 import AndroidRoundedIcon from '@mui/icons-material/AndroidRounded';
-import { IErrorRoute } from '@/store/typings/type';
+import { IErrorRoute } from '@/store/typings/root';
 import { Tooltip } from '@mui/joy';
 export default function ErrorPage() {
   const error = useRouteError() as IErrorRoute;
