@@ -6,7 +6,6 @@ require (
 	github.com/go-playground/validator/v10 v10.19.0
 	github.com/gofiber/fiber/v2 v2.10.0
 	github.com/golang-jwt/jwt/v5 v5.2.1
-	github.com/opentracing/opentracing-go v1.2.0
 	github.com/shirou/gopsutil/v3 v3.24.3
 	github.com/spf13/cobra v1.8.0
 	github.com/spf13/viper v1.18.2

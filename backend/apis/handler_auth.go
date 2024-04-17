@@ -12,7 +12,6 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/opentracing/opentracing-go"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"golang.org/x/crypto/bcrypt"
@@ -51,9 +50,9 @@ func NewHandleAuth(f fiber.Router, mgc *drivers.MongoDBClient, srvAuth services.
 	g.Post("/register", HandleBodyParser(auth.Register))
 }
 
-func (a *auth) Register(c *fiber.Ctx, ctx context.Context, span opentracing.Span, dto dtos.DtoRegister) (*Context, error) {
-	// ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	// defer cancel()
+func (a *auth) Register( dto dtos.DtoRegister) (*Context, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
 	find, err := a.srv.FindOneKeyValue(ctx, "email", dto.Email)
 	if err != nil {
 		if !errors.Is(err, mongo.ErrNoDocuments) {

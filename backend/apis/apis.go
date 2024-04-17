@@ -32,7 +32,6 @@ var (
 func NewFiberAPI(mgc *drivers.MongoDBClient, srvAuth services.AuthService) *fiber.App {
 	f := fiber.New()
 	f.Use(FiberCORS)
-
 	f.Use(recover.New())
 	f.Use(func(c *fiber.Ctx) error {
 		slog.Info(fmt.Sprintf("%s %s from %s status %d", c.Method(), c.Path(), c.IP(), c.Response().StatusCode()))

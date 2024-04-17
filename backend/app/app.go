@@ -80,7 +80,6 @@ func NewApp(conf *config.AppConfig) (Apps, error) {
 
 	srvAuth := services.NewAuthService(mgc.Collection("auth"))
 
-	//tracking 
 	fb := apis.NewFiberAPI(mgc, srvAuth)
 
 	return &app{
@@ -94,6 +93,9 @@ func (a *app) Runner(ctx context.Context) error {
 	g, c := errgroup.WithContext(ctx)
 
 	g.Go(func() error {
+		fmt.Println()
+		fmt.Println("a.config.Server.Addr", a.config.Server.Addr)
+		fmt.Println()
 		path := net.JoinHostPort("0.0.0.0", strconv.Itoa(a.config.Server.Port))
 		slog.Info("Server is running on", slog.String("entry", path))
 		return a.fiber.Listen(path)

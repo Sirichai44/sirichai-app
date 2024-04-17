@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -29,7 +30,7 @@ type (
 	}
 
 	Server struct {
-		addr string
+		Addr string
 		Port int
 	}
 
@@ -63,6 +64,10 @@ func NewAppConfig(file string) (*AppConfig, error) {
 		return nil, err
 	}
 
+	fmt.Println()
+	fmt.Println("server config", viper.GetString("server.addr"), viper.GetInt("server.port"))
+	fmt.Println()
+
 	return &AppConfig{
 		HostID:     info.HostID,
 		HostnName:  info.Hostname,
@@ -70,7 +75,7 @@ func NewAppConfig(file string) (*AppConfig, error) {
 		ExpireTime: 24 * time.Hour,
 		Database:   getDatabase(),
 		Server: Server{
-			addr: viper.GetString("server.addr"),
+			Addr: viper.GetString("server.addr"),
 			Port: viper.GetInt("server.port"),
 		},
 	}, nil
