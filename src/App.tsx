@@ -1,9 +1,20 @@
 import { Outlet } from 'react-router-dom';
 import { useColorScheme } from '@mui/joy';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import useCurrentUser from './hook/useCurrentUser';
 
 function App() {
   const { mode } = useColorScheme();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const initialState = async () => {
+      await useCurrentUser();
+    };
+
+    Promise.all([initialState()]).then(() => setLoading(false));
+  }, []);
+
   useEffect(() => {
     const root = document.documentElement;
 
@@ -14,7 +25,7 @@ function App() {
     }
   }, [mode]);
 
-  return <Outlet />;
+  return loading ? null : <Outlet />;
 }
 
 export default App;

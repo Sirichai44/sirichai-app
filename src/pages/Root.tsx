@@ -5,20 +5,19 @@ import ModeCommentRoundedIcon from '@mui/icons-material/ModeCommentRounded';
 import classNames from 'classnames';
 import { NavLink, Outlet } from 'react-router-dom';
 import ButtonMode from './components/ButtonMode';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect } from 'react';
 import useResponsiveWidth from '@/hook/useResponsiveWidth';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
 import { Button, IconButton, Tooltip } from '@mui/joy';
-import { useSelector } from 'react-redux';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
-import { IStateAuth } from '@/store/typings/auth/types';
-import { IRootState } from '@/store/typings/root';
+import { useAppDispatch, useAppSelector } from '@/store/store';
 
-// import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+import { clearSessionUser } from '@/store/reducers/authReducer';
 
 const Root = () => {
   const navLink = [
@@ -54,11 +53,11 @@ const Root = () => {
     }
   }, [md]);
 
-  const state = useSelector((state: IStateAuth) => state);
-  const state2 = useSelector((state: IRootState) => state);
-  console.log('state', state);
-  console.log('state2', state2);
+  const proflie = useAppSelector((state) => state.auth.profile);
 
+  const handleLogout = () => {
+    useAppDispatch(clearSessionUser());
+  };
   return (
     <div className="flex w-full h-screen">
       <div
@@ -74,7 +73,7 @@ const Root = () => {
               ) : (
                 <>
                   <AccountCircleIcon />
-                  <span className="ml-1 font-bold ">{state?.profile?.username || ''}</span>
+                  <span className="ml-1 font-bold ">{proflie.username}</span>
                 </>
               )}
             </div>
@@ -114,23 +113,27 @@ const Root = () => {
           )}>
           <ButtonMode />
           <div>
-            {!collapsed ? (
-              <Button
-                variant="plain"
-                color="neutral"
-                startDecorator={<SettingsRoundedIcon className="w-5 opacity-70" />}>
-                <NavLink to="/setting">
-                  <span className="font-comfortaa">Setting</span>
-                </NavLink>
-              </Button>
-            ) : (
-              <Tooltip title="Setting" placement="right" arrow>
-                <NavLink to="/setting">
-                  <IconButton>
-                    <SettingsRoundedIcon className="w-5 opacity-70" />
-                  </IconButton>
-                </NavLink>
-              </Tooltip>
+            {proflie.login && (
+              <>
+                {!collapsed ? (
+                  <Button
+                    variant="plain"
+                    color="neutral"
+                    startDecorator={<SettingsRoundedIcon className="w-5 opacity-70" />}>
+                    <NavLink to="/setting">
+                      <span className="font-comfortaa">Setting</span>
+                    </NavLink>
+                  </Button>
+                ) : (
+                  <Tooltip title="Setting" placement="right" arrow>
+                    <NavLink to="/setting">
+                      <IconButton>
+                        <SettingsRoundedIcon className="w-5 opacity-70" />
+                      </IconButton>
+                    </NavLink>
+                  </Tooltip>
+                )}
+              </>
             )}
           </div>
           <div>
@@ -138,19 +141,41 @@ const Root = () => {
               <Button
                 variant="plain"
                 color="neutral"
-                startDecorator={<LoginRoundedIcon className="w-5 opacity-70" />}>
-                <NavLink to="/auth/login">
-                  <span className="font-comfortaa"> Sing In</span>
-                </NavLink>
+                startDecorator={
+                  proflie.login ? (
+                    <LogoutRoundedIcon className="w-5 rotate-180 opacity-70" />
+                  ) : (
+                    <LoginRoundedIcon className="w-5 opacity-70" />
+                  )
+                }>
+                {proflie.login ? (
+                  <span className="font-comfortaa" onClick={handleLogout}>
+                    Logout
+                  </span>
+                ) : (
+                  <NavLink to="/auth/login">
+                    <span className="font-comfortaa"> Sing In</span>
+                  </NavLink>
+                )}
               </Button>
             ) : (
-              <Tooltip title="Login" placement="right" arrow>
-                <NavLink to="/auth/login">
-                  <IconButton>
-                    <LoginRoundedIcon className="w-5 opacity-70" />
-                  </IconButton>
-                </NavLink>
-              </Tooltip>
+              <>
+                {proflie.login ? (
+                  <Tooltip title="Logout" placement="right" arrow>
+                    <IconButton onClick={handleLogout}>
+                      <LogoutRoundedIcon className="w-5 rotate-180 opacity-70" />
+                    </IconButton>
+                  </Tooltip>
+                ) : (
+                  <Tooltip title="Login" placement="right" arrow>
+                    <NavLink to="/auth/login">
+                      <IconButton>
+                        <LoginRoundedIcon className="w-5 opacity-70" />
+                      </IconButton>
+                    </NavLink>
+                  </Tooltip>
+                )}
+              </>
             )}
           </div>
 

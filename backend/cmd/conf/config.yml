@@ -1,13 +1,18 @@
 server:
+  proxy: https://sirichai-app.onrender.com
   addr: 0.0.0.0
   port: 8080
 
 mongo:
+  url: mongodb+srv://sirichai99:KzHRIr2802KPFz0R@cluster0.ltftrf5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
   host: localhost
   port: 27017
   database: app
-  username: root
-  password: P@ssw0rd
+  username: sirichai99
+  password: KzHRIr2802KPFz0R
+  # username: root
+  # password: P@ssw0rd
 
 secret:
   key: sirichai-44-secret-key
+#KzHRIr2802KPFz0R

@@ -18,12 +18,13 @@ var (
 	apiVersion = "/api/v3"
 	Fiber      = fiber.Config{
 		ServerHeader: appVersion,
-		BodyLimit: 10 * 1024 * 1024, // 10 MB
+		BodyLimit:    10 * 1024 * 1024, // 10 MB
 	}
 
 	FiberCORS = cors.New(cors.Config{
 		Next:         nil,
-		AllowOrigins: "http://localhost:3000",
+		// AllowOrigins: "*",
+		AllowOrigins: "https://sirichai-app.netlify.app",
 		AllowMethods: strings.Join([]string{fiber.MethodGet, fiber.MethodPost, fiber.MethodPut, fiber.MethodPatch, fiber.MethodDelete}, ","),
 		AllowHeaders: "Origin, Content-Type, Accept, Accept-Language, Content-Length",
 	})

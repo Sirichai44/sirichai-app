@@ -13,6 +13,11 @@ type DtoRegister struct {
 	ConfirmPassword string `json:"confirm_password" validate:"required,eqfield=Password"`
 }
 
+type DtoLogin struct {
+	Email    string `json:"email" validate:"required,email"`
+	Password string `json:"password" validate:"required"`
+}
+
 
 type Register struct {
 	ID        primitive.ObjectID `bson:"_id"`

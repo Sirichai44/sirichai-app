@@ -18,9 +18,11 @@ type (
 		ExpireTime time.Duration
 		Database   Database
 		Server     Server
+		Mode       string
 	}
 
 	Database struct {
+		Url          string
 		Host         string
 		Port         int
 		Databasename string
@@ -29,10 +31,10 @@ type (
 	}
 
 	Server struct {
-		Addr string
-		Port int
+		Proxy string
+		Addr  string
+		Port  int
 	}
-
 )
 
 func NewAppConfig(file string) (*AppConfig, error) {
@@ -64,20 +66,23 @@ func NewAppConfig(file string) (*AppConfig, error) {
 	}
 
 	return &AppConfig{
+		Mode: 		 viper.GetString("mode"),
 		HostID:     info.HostID,
 		HostnName:  info.Hostname,
 		SecretKey:  viper.GetString("secret.key"),
 		ExpireTime: 24 * time.Hour,
 		Database:   getDatabase(),
 		Server: Server{
-			Addr: viper.GetString("server.addr"),
-			Port: viper.GetInt("server.port"),
+			Proxy: viper.GetString("server.proxy"),
+			Addr:  viper.GetString("server.addr"),
+			Port:  viper.GetInt("server.port"),
 		},
 	}, nil
 }
 
 func getDatabase() Database {
 	return Database{
+		Url:          viper.GetString("mongo.url"),
 		Host:         viper.GetString("mongo.host"),
 		Port:         viper.GetInt("mongo.port"),
 		Databasename: viper.GetString("mongo.database"),

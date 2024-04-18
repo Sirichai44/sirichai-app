@@ -16,16 +16,22 @@ type MongoDBClient struct {
 	*mongo.Database
 }
 
-func MongoDBConn(opt config.Database) (*MongoDBClient,error) {
-	dsn := fmt.Sprintf("mongodb://%s:%d", opt.Host, opt.Port)
+func MongoDBConn(opt config.Database, mode string) (*MongoDBClient, error) {
+	var dsn string
+	if mode == "dev" {
+		dsn = fmt.Sprintf("mongodb://%s:%d", opt.Host, opt.Port)
+	} else {
+		dsn = opt.Url
+	}
+	fmt.Println("dsn---->: ", dsn)
 	opts := options.Client()
 	opts.ApplyURI(dsn)
-	if opt.Username != "" && opt.Password != "" {
-		opts.SetAuth(options.Credential{
-			Username: opt.Username,
-			Password: opt.Password,
-		})
-	}
+	// if opt.Username != "" && opt.Password != "" {
+	// 	opts.SetAuth(options.Credential{
+	// 		Username: opt.Username,
+	// 		Password: opt.Password,
+	// 	})
+	// }
 
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()

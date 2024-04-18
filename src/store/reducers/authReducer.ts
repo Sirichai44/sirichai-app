@@ -1,25 +1,34 @@
-import * as actions from '@/store/typings/auth/actions';
 import * as types from '@/store/typings/auth/types';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: types.IStateAuth = {
-  is_loading: false,
-  set_user: false,
   profile: {
+    login: false,
     username: '',
-    email: ''
+    email: '',
+    token: ''
   }
 };
 
-export default (state = initialState, action: actions.AuthAction): types.IStateAuth => {
-  switch (action.type) {
-    case 'SET_PROFILE':
-      console.log('action.payload', action.payload);
-
-      state.set_user = true;
+const authSlice = createSlice({
+  name: 'auth',
+  initialState,
+  reducers: {
+    setProfile: (state, action: PayloadAction<types.IAuthProfile>) => {
       state.profile = action.payload;
-      return state;
-
-    default:
-      return state;
+    },
+    setLogin: (state, action: PayloadAction<boolean>) => {
+      state.profile.login = action.payload;
+    },
+    setSessionUser: (_, action: PayloadAction<string>) => {
+      localStorage.setItem('token', action.payload);
+    },
+    clearSessionUser: (state) => {
+      localStorage.removeItem('token');
+      state.profile = initialState.profile;
+    }
   }
-};
+});
+
+export const { setProfile, setSessionUser, clearSessionUser } = authSlice.actions;
+export default authSlice.reducer;

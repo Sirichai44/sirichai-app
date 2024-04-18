@@ -41,7 +41,7 @@ func NewAppRoot() *cobra.Command {
 			if err != nil {
 				return err
 			}
-
+fmt.Println("conf--->", conf.Mode)
 			app, err := NewApp(conf)
 			if err != nil {
 				return err
@@ -71,7 +71,7 @@ func NewAppRoot() *cobra.Command {
 }
 
 func NewApp(conf *config.AppConfig) (Apps, error) {
-	mgc, err := drivers.MongoDBConn(conf.Database)
+	mgc, err := drivers.MongoDBConn(conf.Database,conf.Mode)
 	if err != nil {
 		slog.Error("MongoDB", slog.String("entry", conf.Database.Host+":"+fmt.Sprintf("%d", conf.Database.Port)), slog.String("connect", "failed"))
 		return nil, err
@@ -93,7 +93,14 @@ func (a *app) Runner(ctx context.Context) error {
 	g, c := errgroup.WithContext(ctx)
 
 	g.Go(func() error {
-		path := net.JoinHostPort(a.config.Server.Addr, strconv.Itoa(a.config.Server.Port))
+		var path string
+		if a.config.Mode == "dev"{
+			path = net.JoinHostPort(a.config.Server.Addr, strconv.Itoa(a.config.Server.Port))
+		} else {
+			path = net.JoinHostPort(a.config.Server.Addr, strconv.Itoa(a.config.Server.Port))
+			fmt.Println("Proxy is running on", path)
+			
+		}
 		slog.Info("Server is running on", slog.String("entry", path))
 		return a.fiber.Listen(path)
 	})
