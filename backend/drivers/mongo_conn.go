@@ -3,7 +3,6 @@ package drivers
 import (
 	"context"
 	"fmt"
-	"log/slog"
 	"time"
 
 	"myapp/config"
@@ -17,14 +16,14 @@ type MongoDBClient struct {
 	*mongo.Database
 }
 
-func MongoDBConn(opt config.Database) (*MongoDBClient, error) {
+func MongoDBConn(opt config.Database, mode string) (*MongoDBClient, error) {
 	var dsn string
-	if opt.Url != "" {
-		dsn = opt.Url
-	} else {
+	if mode == "dev" {
 		dsn = fmt.Sprintf("mongodb://%s:%d", opt.Host, opt.Port)
+	} else {
+		dsn = opt.Url
 	}
-
+	fmt.Println("dsn---->: ", dsn)
 	opts := options.Client()
 	opts.ApplyURI(dsn)
 	// if opt.Username != "" && opt.Password != "" {
@@ -39,12 +38,10 @@ func MongoDBConn(opt config.Database) (*MongoDBClient, error) {
 
 	client, err := mongo.Connect(ctx, opts)
 	if err != nil {
-		slog.Error("Failed to connect to MongoDB")
 		return nil, err
 	}
 
 	if err := client.Ping(ctx, nil); err != nil {
-		slog.Error("Failed to connect to MongoDB2")
 		return nil, err
 	}
 

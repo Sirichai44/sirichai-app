@@ -18,6 +18,7 @@ type (
 		ExpireTime time.Duration
 		Database   Database
 		Server     Server
+		Mode       string
 	}
 
 	Database struct {
@@ -65,6 +66,7 @@ func NewAppConfig(file string) (*AppConfig, error) {
 	}
 
 	return &AppConfig{
+		Mode: 		 viper.GetString("mode"),
 		HostID:     info.HostID,
 		HostnName:  info.Hostname,
 		SecretKey:  viper.GetString("secret.key"),
