@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log/slog"
+	"net"
 	"os"
 	"os/signal"
 	"strconv"
@@ -94,9 +95,9 @@ func (a *app) Runner(ctx context.Context) error {
 	g.Go(func() error {
 		var path string
 		if a.config.Mode == "dev"{
-			path = strconv.Itoa(a.config.Server.Port)
+			path = net.JoinHostPort(a.config.Server.Addr, strconv.Itoa(a.config.Server.Port))
 		} else {
-			path = a.config.Server.Proxy + ":" + strconv.Itoa(a.config.Server.Port)
+			path = strconv.Itoa(a.config.Server.Port)
 			fmt.Println("Proxy is running on", path)
 			
 		}
