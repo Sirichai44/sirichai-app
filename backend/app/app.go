@@ -97,7 +97,7 @@ func (a *app) Runner(ctx context.Context) error {
 		if a.config.Mode == "dev"{
 			path = net.JoinHostPort(a.config.Server.Addr, strconv.Itoa(a.config.Server.Port))
 		} else {
-			path = strconv.Itoa(a.config.Server.Port)
+			path = ":" + strconv.Itoa(a.config.Server.Port)
 			fmt.Println("Proxy is running on", path)
 			
 		}
