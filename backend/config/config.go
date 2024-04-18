@@ -30,8 +30,9 @@ type (
 	}
 
 	Server struct {
-		Addr string
-		Port int
+		Proxy string
+		Addr  string
+		Port  int
 	}
 )
 
@@ -70,8 +71,9 @@ func NewAppConfig(file string) (*AppConfig, error) {
 		ExpireTime: 24 * time.Hour,
 		Database:   getDatabase(),
 		Server: Server{
-			Addr: viper.GetString("server.addr"),
-			Port: viper.GetInt("server.port"),
+			Proxy: viper.GetString("server.proxy"),
+			Addr:  viper.GetString("server.addr"),
+			Port:  viper.GetInt("server.port"),
 		},
 	}, nil
 }

@@ -19,12 +19,12 @@ type MongoDBClient struct {
 
 func MongoDBConn(opt config.Database) (*MongoDBClient, error) {
 	var dsn string
-	if opt.Url == "" {
-		dsn = fmt.Sprintf("mongodb://%s:%d", opt.Host, opt.Port)
-	}else {
+	if opt.Url != "" {
 		dsn = opt.Url
+	} else {
+		dsn = fmt.Sprintf("mongodb://%s:%d", opt.Host, opt.Port)
 	}
-	
+
 	opts := options.Client()
 	opts.ApplyURI(dsn)
 	// if opt.Username != "" && opt.Password != "" {

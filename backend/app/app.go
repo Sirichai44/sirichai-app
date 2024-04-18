@@ -93,7 +93,12 @@ func (a *app) Runner(ctx context.Context) error {
 	g, c := errgroup.WithContext(ctx)
 
 	g.Go(func() error {
-		path := net.JoinHostPort(a.config.Server.Addr, strconv.Itoa(a.config.Server.Port))
+		var path string
+		if a.config.Server.Proxy != ""{
+			path = a.config.Server.Proxy
+		}else{
+			path = net.JoinHostPort(a.config.Server.Addr, strconv.Itoa(a.config.Server.Port))
+		}
 		slog.Info("Server is running on", slog.String("entry", path))
 		return a.fiber.Listen(path)
 	})
