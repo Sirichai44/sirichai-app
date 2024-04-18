@@ -17,4 +17,33 @@
     overflow-wrap: anywhere;
     word-break: normal;
   }
+
+  .transition-width {
+    transition-property: width;
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.blinking-cursor:after {
+  content: '|';
+  font-weight: 300;
+  animation: blink 1.5s infinite;
+}
+
+.input-focused-highlight-error {
+  --Input-focusedHighlight: var(--text-error-color) !important;
+}
+.input-focused-highlight {
+  --Input-focusedHighlight: #a1a1aa !important;
 }
