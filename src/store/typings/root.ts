@@ -1,9 +1,3 @@
-import { IStateAuth } from './auth/types';
-
-export interface IRootState {
-  authentication: IStateAuth;
-}
-
 export interface IErrorRoute {
   data: string;
   error: Error;

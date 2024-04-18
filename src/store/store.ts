@@ -1,26 +1,24 @@
-import { applyMiddleware, createStore, Middleware } from 'redux';
-import createSagaMiddleware from 'redux-saga';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { Middleware } from 'redux';
 // import { createLogger } from "redux-logger";
 
 import rootReducer from './reducers';
 import useLogger from '@/hook/useLogger';
-import rootSaga from './sagas/index';
-// import { IRootState } from './typings/type';
+import { configureStore } from '@reduxjs/toolkit';
+import authApi from './services/authService';
+import { useSelector } from 'react-redux';
+import { TypedUseSelectorHook } from 'react-redux';
 
-const initialState = {};
-const sagaMiddleware = createSagaMiddleware();
 const logger = useLogger();
 
-const middleware: Middleware[] = [logger, sagaMiddleware];
+const middleware: Middleware[] = [logger, authApi.middleware];
 
-const store = createStore(
-  rootReducer,
-  initialState,
-  composeWithDevTools(applyMiddleware(...middleware))
-);
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(middleware)
+});
 
-//Run the saga
-sagaMiddleware.run(rootSaga);
+type AppState = ReturnType<typeof store.getState>;
 
+export const useAppSelector: TypedUseSelectorHook<AppState> = useSelector;
+export const useAppDispatch = (arg: ReturnType<typeof store.dispatch>) => store.dispatch(arg);
 export default store;

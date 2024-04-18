@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 
 import {
   Box,
@@ -11,8 +10,6 @@ import {
   ModalClose,
   useColorScheme
 } from '@mui/joy';
-// import { toast } from "react-toastify";
-import * as Type from '@/store/typings/root';
 
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';

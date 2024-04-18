@@ -1,18 +1,17 @@
-import { Dispatch } from 'redux';
-import { useDispatch } from 'react-redux';
 import { Button, Grid } from '@mui/joy';
 import { NavLink } from 'react-router-dom';
 import { RegisterSchema } from './components/schema/RegisterSchema';
 import useFormReact from '@/hook/useFormReact';
 import GenInput from './components/Input';
-import * as srv from '@/services/authService';
-import * as actions from '@/store/typings/auth/actions';
-import { useSelector } from 'react-redux';
-import { IStateAuth } from '@/store/typings/auth/types';
-import { IRootState } from '@/store/typings/root';
+import { IAuthRegister } from '@/store/typings/auth/types';
 
+import { useRegisterMutation } from '@/store/services/authService';
+import { setProfile, setSessionUser } from '@/store/reducers/authReducer';
+import { useAppSelector, useAppDispatch } from '@/store/store';
+import { useNotifyPromise, useNotifyResolve } from '@/hook/useNotify';
+import useNavigateTo from '@/hook/useNavigateTo';
 const Register = () => {
-  const dispatch = useDispatch<Dispatch<actions.AuthAction>>();
+  const navagateTo = useNavigateTo();
   const Form = useFormReact(RegisterSchema);
 
   const rgNameField = [
@@ -38,21 +37,40 @@ const Register = () => {
       defaultValue: ''
     }
   ];
-
-  const handleSummit = Form.handleSubmit(async (data) => {
+  const [register, registerResponse] = useRegisterMutation();
+  const handleSummit = Form.handleSubmit(async (data: IAuthRegister) => {
     const isValid = await Form.trigger();
     if (isValid) {
-      console.log('submit', data);
-      dispatch({ type: 'CALL_REGISTER', payload: data });
+      const id = useNotifyPromise('registering...');
+      try {
+        const response = await register(data).unwrap();
+
+        useAppDispatch(
+          setProfile({
+            username: data.username,
+            email: data.email,
+            token: response.results.token,
+            login: true
+          })
+        );
+        useAppDispatch(setSessionUser(response.results.token));
+
+        useNotifyResolve('success', id, 'register success');
+        setTimeout(() => {
+          navagateTo('/blog');
+        }, 1000);
+      } catch (error: any) {
+        useNotifyResolve('error', id, error.data);
+      }
     } else {
       console.log('error', Form.formState.errors);
     }
   });
 
-  const state = useSelector((state: IStateAuth) => state);
-  const state2 = useSelector((state: IRootState) => state);
+  const state = useAppSelector((state) => state);
+
   console.log('state', state);
-  console.log('state2', state2);
+
   return (
     <div className="flex items-center justify-center w-full h-screen ">
       <div className="w-4/12">
@@ -77,8 +95,14 @@ const Register = () => {
                 })
               )}
               <div className="flex items-center justify-between">
-                <Button variant="plain" color="neutral" type="submit">
-                  <span className="text-lg">Sign Up</span>
+                <Button
+                  variant="plain"
+                  color="neutral"
+                  type="submit"
+                  disabled={registerResponse.isLoading}>
+                  <span className="text-lg">
+                    {registerResponse.isLoading ? 'Registering ...' : 'Sign Up'}
+                  </span>
                 </Button>
 
                 <NavLink to="/auth/login" className="mt-1 text-xs text-blue-300">

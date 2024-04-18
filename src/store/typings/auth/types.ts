@@ -1,6 +1,4 @@
 export interface IStateAuth {
-  is_loading: boolean;
-  set_user: boolean;
   profile: IAuthProfile;
 }
 
@@ -13,9 +11,18 @@ export interface IAuthRegister {
 }
 
 export interface IAuthProfile {
+  login: boolean;
   username: string;
   email: string;
+  token: string;
 }
 export interface IApiReturnToken {
   token: string;
+}
+
+export interface ICurrenUser {
+  username: string;
+  email: string;
+  token: string;
+  exp: number;
 }

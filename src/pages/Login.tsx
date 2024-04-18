@@ -2,8 +2,14 @@ import { useForm } from 'react-hook-form';
 import { Button, Grid } from '@mui/joy';
 import { NavLink } from 'react-router-dom';
 import GenInput from './components/Input';
+import { useLoginMutation } from '@/store/services/authService';
+import { useNotifyPromise, useNotifyResolve } from '@/hook/useNotify';
+import { useAppDispatch } from '@/store/store';
+import { setProfile, setSessionUser } from '@/store/reducers/authReducer';
+import useNavigateTo from '@/hook/useNavigateTo';
 
 const Login = () => {
+  const navigateTo = useNavigateTo();
   const Form = useForm();
   const loginField = [
     {
@@ -17,11 +23,33 @@ const Login = () => {
       defaultValue: ''
     }
   ];
+  const [login] = useLoginMutation();
   const handleSummit = Form.handleSubmit(async (data) => {
-    data.preventDefault();
     const isValid = await Form.trigger();
+    const id = useNotifyPromise('login...');
     if (isValid) {
       console.log('submit', Form.getValues());
+      try {
+        const response = await login(data).unwrap();
+        console.log('response', response);
+
+        useAppDispatch(
+          setProfile({
+            username: data.email,
+            email: data.email,
+            token: response.results.token,
+            login: true
+          })
+        );
+        useAppDispatch(setSessionUser(response.results.token));
+        useNotifyResolve('success', id, 'login success');
+
+        setTimeout(() => {
+          navigateTo('/blog');
+        }, 1000);
+      } catch (error: any) {
+        useNotifyResolve('error', id, error.data);
+      }
     } else {
       console.log('error', Form.formState.errors);
     }
@@ -44,7 +72,7 @@ const Login = () => {
                 })
               )}
               <div className="flex items-center justify-between">
-                <Button variant="plain" color="neutral">
+                <Button variant="plain" color="neutral" type="submit">
                   <span className="text-lg">Sign In</span>
                 </Button>
 
