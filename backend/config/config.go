@@ -21,6 +21,7 @@ type (
 	}
 
 	Database struct {
+		Url          string
 		Host         string
 		Port         int
 		Databasename string
@@ -32,7 +33,6 @@ type (
 		Addr string
 		Port int
 	}
-
 )
 
 func NewAppConfig(file string) (*AppConfig, error) {
@@ -78,6 +78,7 @@ func NewAppConfig(file string) (*AppConfig, error) {
 
 func getDatabase() Database {
 	return Database{
+		Url:          viper.GetString("mongo.url"),
 		Host:         viper.GetString("mongo.host"),
 		Port:         viper.GetInt("mongo.port"),
 		Databasename: viper.GetString("mongo.database"),

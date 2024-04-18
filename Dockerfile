@@ -1,42 +1,31 @@
-# Build the frontend
-FROM node:20-alpine AS frontend
+# Use a minimal base image
+FROM golang:latest AS backend
 
-WORKDIR /frontend-build
-
-COPY package.json ./
-COPY src/ src/
-
-RUN yarn install
-RUN yarn build
-
-# Build the backend
-FROM golang:1.22-alpine AS backend
-
+# Set the Current Working Directory inside the container
 WORKDIR /backend-build
 
-RUN apk add --no-cache git
+# COPY backend/go.mod backend/go.sum ./
+# RUN go mod download
 
-RUN go install github.com/cosmtrek/air@latest
-
-
-COPY backend/go.mod backend/go.sum ./
-RUN go mod download
-
+# Copy the source code from the current directory to the Working Directory inside the container
 COPY . .
 
-RUN ./backend/go build -o main ./cmd/main.go 
+# Build the Go app
+# RUN go build -o sirichai ./cmd
 
-# Build the final image
-FROM alpine:latest AS monolithic
+# Start from a smaller, minimal base image
+FROM alpine:latest  
 
-WORKDIR /usr/local/sirichai
+WORKDIR /app
 
 RUN apk add --no-cache tzdata
 ENV TZ="UTC"
 
-COPY --from=frontend /frontend-build/dist /usr/local/sirichai/dist
-COPY --from=backend /backend-build/  /usr/local/sirichai/app/
+# Copy the Pre-built binary file from the previous stage
+COPY --from=backend /backend-build /app/
 
+# Expose port 8080 to the outside world
 EXPOSE 8080
 
-CMD ["./cmd/"]
+# Command to run the executable
+CMD ["./cmd"]
