@@ -95,7 +95,7 @@ func (a *app) Runner(ctx context.Context) error {
 	g.Go(func() error {
 		var path string
 		if a.config.Server.Proxy != ""{
-			path = a.config.Server.Proxy
+			path = net.JoinHostPort(a.config.Server.Proxy, strconv.Itoa(a.config.Server.Port))
 		}else{
 			path = net.JoinHostPort(a.config.Server.Addr, strconv.Itoa(a.config.Server.Port))
 		}
