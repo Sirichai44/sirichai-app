@@ -8,7 +8,7 @@ WORKDIR /backend-build
 # RUN go mod download
 
 # Copy the source code from the current directory to the Working Directory inside the container
-COPY . .
+COPY /backend .
 
 # Build the Go app
 # RUN go build -o sirichai ./cmd

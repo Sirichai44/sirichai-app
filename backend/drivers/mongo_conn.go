@@ -19,7 +19,7 @@ type MongoDBClient struct {
 
 func MongoDBConn(opt config.Database) (*MongoDBClient, error) {
 	var dsn string
-	if opt.Url != "" {
+	if opt.Url == "" {
 		dsn = fmt.Sprintf("mongodb://%s:%d", opt.Host, opt.Port)
 	}else {
 		dsn = opt.Url
