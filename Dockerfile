@@ -11,7 +11,7 @@ WORKDIR /backend-build
 COPY /backend .
 
 # Build the Go app
-# RUN go build -o sirichai ./cmd
+RUN go build -o sirichai ./cmd
 
 # Start from a smaller, minimal base image
 FROM alpine:latest  
@@ -28,4 +28,4 @@ COPY --from=backend /backend-build /app/
 EXPOSE 8080
 
 # Command to run the executable
-CMD ["./cmd"]
+CMD ["./backend/cmd"]
