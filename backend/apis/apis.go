@@ -23,7 +23,8 @@ var (
 
 	FiberCORS = cors.New(cors.Config{
 		Next:         nil,
-		AllowOrigins: "http://localhost:3000,https://sirichai-app.onrender.com:8080,https://sirichai-app.onrender.com",
+		AllowOrigins: "*",
+		// AllowOrigins: "http://localhost:3000,https://sirichai-app.onrender.com:8080,https://sirichai-app.onrender.com",
 		AllowMethods: strings.Join([]string{fiber.MethodGet, fiber.MethodPost, fiber.MethodPut, fiber.MethodPatch, fiber.MethodDelete}, ","),
 		AllowHeaders: "Origin, Content-Type, Accept, Accept-Language, Content-Length",
 	})
