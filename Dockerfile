@@ -12,7 +12,7 @@ WORKDIR /backend-build
 COPY . .
 
 # Build the Go app
-RUN go build -o sirichai ./cmd/main.go
+RUN CGO_ENABLED=0 go build -o sirichai ./backend/cmd/main.go
 
 # Start from a smaller, minimal base image
 FROM alpine:latest  
