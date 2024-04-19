@@ -11,7 +11,8 @@ import {
 } from 'swiper/modules';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-
+import ArrowCircleLeftRoundedIcon from '@mui/icons-material/ArrowCircleLeftRounded';
+import ArrowCircleRightRoundedIcon from '@mui/icons-material/ArrowCircleRightRounded';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -26,14 +27,27 @@ const Carousol = () => {
   return (
     <div className="overflow-x-hidden border border-blue-400 w-96">
       <Swiper
-        modules={[Pagination, A11y, Autoplay]}
+        modules={[Pagination, Navigation, A11y, Autoplay]}
         spaceBetween={50}
         slidesPerView={1}
         autoplay={{ delay: 3000, disableOnInteraction: true }}
         pagination={{ clickable: true }}
         // scrollbar={{ draggable: true }}
-        onSwiper={(swiper) => console.log(swiper)}
-        onSlideChange={() => console.log('slide change')}>
+        loop={true}
+        effect="coverflow"
+        grabCursor={true}
+        coverflowEffect={{
+          rotate: 50,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: true
+        }}
+        className="swiper_container"
+        navigation={{
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev'
+        }}>
         {certi.slice(0, 6).map((cer) => (
           <SwiperSlide key={cer.id}>
             <img
@@ -43,6 +57,16 @@ const Carousol = () => {
             />
           </SwiperSlide>
         ))}
+
+        <div className="slider-controler">
+          <div className="swiper-button-prev slider-arrow">
+            <ArrowCircleLeftRoundedIcon className="prev" />
+          </div>
+
+          <div className="swiper-button-next slider-arrow">
+            <ArrowCircleRightRoundedIcon className="next" />
+          </div>
+        </div>
       </Swiper>
     </div>
   );

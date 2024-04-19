@@ -2,11 +2,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
 
+@import '/src//styles//carousol.css';
+
 :root {
   --background-color: #f4f4f5;
   --background-notify-color: #d4d4d8;
   --text-color: #18181b;
   --text-error-color: #f87171;
+  --text-carousol-color: #a1a1aa;
 }
 
 body {
@@ -20,8 +23,10 @@ body {
 html.dark {
   --background-color: #18181b;
   --background-notify-color: #d4d4d8;
+  --text-carousol-color: #d4d4d8;
   --text-color: #f4f4f5;
   --text-error-color: #dc2626;
+  --text-carousol-color: #d4d4d8;
   color-scheme: dark;
   scrollbar-color: hsla(0, 0%, 100%, 0.4) hsla(0, 0%, 100%, 0.029);
 }
