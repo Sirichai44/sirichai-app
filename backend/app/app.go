@@ -79,7 +79,7 @@ func NewApp(conf *config.AppConfig) (Apps, error) {
 	slog.Info("MongoDB", slog.String("entry", conf.Database.Host+":"+fmt.Sprintf("%d", conf.Database.Port)), slog.String("connect", "successfully"))
 
 	srvAuth := services.NewAuthService(mgc.Collection("auth"))
-
+	fmt.Println("srvAuth--->", srvAuth)
 	fb := apis.NewFiberAPI(mgc, srvAuth)
 
 	return &app{

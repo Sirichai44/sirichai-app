@@ -5,7 +5,7 @@ import * as EP from '@/store/services/endpoint';
 // const profile = useAppSelector((state) => state.auth.profile);
 const isProd = process.env.NODE_ENV === 'production';
 const authApi: any = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: isProd ? EP.prod : EP.dev }),
+  baseQuery: fetchBaseQuery({ baseUrl: isProd ? EP.prod : undefined }),
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (body) => ({

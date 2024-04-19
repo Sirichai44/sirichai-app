@@ -62,10 +62,10 @@ const Root = () => {
     <div className="flex w-full h-screen">
       <div
         className={`${collapsed ? 'w-16' : 'w-56'} transition-width duration-300 h-full flex flex-col`}>
-        <div className="h-auto">
+        <div className="w-full h-auto border border-red-300">
           <div
-            className={`flex ${collapsed && 'flex-col-reverse'} items-center justify-between mx-4 mt-8 mb-4`}>
-            <div className="flex">
+            className={`flex ${collapsed && 'flex-col-reverse'} items-center justify-between mt-8 mb-4 border border-blue-500 w-full`}>
+            <div className="w-full text-wrap">
               {collapsed ? (
                 <Tooltip title="Sirichai" placement="right" arrow>
                   <AccountCircleIcon />
@@ -73,7 +73,9 @@ const Root = () => {
               ) : (
                 <>
                   <AccountCircleIcon />
-                  <span className="ml-1 font-bold ">{proflie.username}</span>
+                  <span className="flex flex-wrap ml-1 font-bold border border-red-400">
+                    {proflie.username}
+                  </span>
                 </>
               )}
             </div>
