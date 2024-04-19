@@ -124,5 +124,5 @@ func fileConfig() string {
 		panic(err)
 	}
 
-	return filepath.Join(filepath.Dir(ext), "conf"+"config.yml")
+	return filepath.Join(filepath.Dir(ext), "conf/"+"config.yml")
 }
