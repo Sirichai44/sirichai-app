@@ -22,7 +22,7 @@ RUN apk add --no-cache tzdata
 ENV TZ="UTC"
 
 # Copy the Pre-built binary file from the previous stage
-COPY --from=backend /backend/sirichai .
+COPY --from=backend /backend-build/sirichai /app/
 
 # Change the permissions of the file to be executable
 RUN chmod +x ./sirichai
