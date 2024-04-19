@@ -24,6 +24,9 @@ ENV TZ="UTC"
 # Copy the Pre-built binary file from the previous stage
 COPY --from=backend /backend-build /app/
 
+# Change the permissions of the file to be executable
+RUN chmod +x ./cmd
+
 # Expose port 8080 to the outside world
 EXPOSE 8080
 
