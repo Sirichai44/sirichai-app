@@ -62,23 +62,21 @@ const Root = () => {
     <div className="flex w-full h-screen">
       <div
         className={`${collapsed ? 'w-16' : 'w-56'} transition-width duration-300 h-full flex flex-col`}>
-        <div className="w-full h-auto border border-red-300">
+        <div className="w-full h-auto">
           <div
-            className={`flex ${collapsed && 'flex-col-reverse'} items-center justify-between mt-8 mb-4 border border-blue-500 w-full`}>
-            <div className="w-full text-wrap">
-              {collapsed ? (
-                <Tooltip title="Sirichai" placement="right" arrow>
+            className={`flex ${collapsed && 'flex-col-reverse'} ml-2 max-w-40 items-center justify-between mt-8 mb-4`}>
+            {collapsed ? (
+              <Tooltip title="Sirichai" placement="right" arrow>
+                <AccountCircleIcon />
+              </Tooltip>
+            ) : (
+              <span className="flex w-full font-bold">
+                <span>
                   <AccountCircleIcon />
-                </Tooltip>
-              ) : (
-                <>
-                  <AccountCircleIcon />
-                  <span className="flex flex-wrap ml-1 font-bold border border-red-400">
-                    {proflie.username}
-                  </span>
-                </>
-              )}
-            </div>
+                  {proflie.username}
+                </span>
+              </span>
+            )}
           </div>
           {navLink.map((item) => (
             <NavLink

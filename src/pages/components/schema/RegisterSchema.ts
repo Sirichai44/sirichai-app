@@ -12,7 +12,8 @@ export const RegisterSchema = yup.object().shape({
   username: yup
     .string()
     .required('Username is required')
-    .min(4, 'Username contain minimum at 8 characters'),
+    .min(4, 'Username contain minimum at 8 characters')
+    .max(12, 'Username contain maximum at 12 characters'),
   email: yup.string().required('Email is required').email('Email is invalid'),
   password: yup
     .string()

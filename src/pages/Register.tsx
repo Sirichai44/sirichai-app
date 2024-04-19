@@ -10,6 +10,7 @@ import { setProfile, setSessionUser } from '@/store/reducers/authReducer';
 import { useAppSelector, useAppDispatch } from '@/store/store';
 import { useNotifyPromise, useNotifyResolve } from '@/hook/useNotify';
 import useNavigateTo from '@/hook/useNavigateTo';
+import { useState } from 'react';
 const Register = () => {
   const navagateTo = useNavigateTo();
   const Form = useFormReact(RegisterSchema);
@@ -72,8 +73,8 @@ const Register = () => {
   console.log('state', state);
 
   return (
-    <div className="flex items-center justify-center w-full h-screen ">
-      <div className="w-4/12">
+    <div className="flex items-center justify-center w-full h-screen">
+      <div className="w-60">
         <NavLink to="/blog">
           <div className="flex justify-center">Go home</div>
         </NavLink>
@@ -99,10 +100,8 @@ const Register = () => {
                   variant="plain"
                   color="neutral"
                   type="submit"
-                  disabled={registerResponse.isLoading}>
-                  <span className="text-lg">
-                    {registerResponse.isLoading ? 'Registering ...' : 'Sign Up'}
-                  </span>
+                  loading={registerResponse.isLoading}>
+                  <span className="text-lg">Sign Up</span>
                 </Button>
 
                 <NavLink to="/auth/login" className="mt-1 text-xs text-blue-300">
