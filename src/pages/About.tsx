@@ -1,10 +1,10 @@
 import { Grid } from '@mui/joy';
-import Carousol from './components/Carousol';
+import Carousol from './components/carousol/Carousol';
 
 const About = () => {
   const arr = Array.from({ length: 50 }, (_, i) => i + 1);
   return (
-    <div className="w-full h-full overflow-x-hidden">
+    <div className="flex items-center justify-center w-full h-full overflow-x-hidden">
       {/* <Grid
         container
         spacing={{ xs: 2, md: 3 }}
