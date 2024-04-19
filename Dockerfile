@@ -12,7 +12,7 @@ WORKDIR /backend-build
 COPY ./backend .
 
 # Build the Go app
-RUN CGO_ENABLED=0 go build -o sirichai --config ./cmd/conf/config.yaml ./cmd/main.go
+RUN CGO_ENABLED=0 go build -o sirichai ./cmd/main.go
 
 # Start from a smaller, minimal base image
 FROM alpine:latest  
@@ -30,6 +30,7 @@ EXPOSE 8080
 
 ENV MODE "production"
 ENV PORT 8080
+ENV config ""
 
 # Command to run the executable
 CMD ["./sirichai"]
