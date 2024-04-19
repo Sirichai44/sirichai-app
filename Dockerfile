@@ -31,4 +31,4 @@ RUN chmod +x ./sirichai
 EXPOSE 8080
 
 # Command to run the executable
-CMD ["./cmd"]
+CMD ["./app/cmd"]
