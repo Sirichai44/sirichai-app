@@ -24,8 +24,6 @@ func NewAuthService(mgc *mongo.Collection) AuthService {
 }
 
 func (auth *authService) Create(ctx context.Context, dto dtos.Register) error {
-
-
 	_, err := auth.mgc.InsertOne(ctx, dto)
 	if err != nil {
 		slog.Error("AuthService", slog.String("entry", "Create"), slog.String("insert", "failed"))

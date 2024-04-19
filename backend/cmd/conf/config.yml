@@ -8,10 +8,8 @@ mongo:
   host: localhost
   port: 27017
   database: app
-  username: sirichai99
-  password: KzHRIr2802KPFz0R
-  # username: root
-  # password: P@ssw0rd
+  username: root
+  password: P@ssw0rd
 
 secret:
   key: sirichai-44-secret-key

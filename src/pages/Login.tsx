@@ -56,12 +56,12 @@ const Login = () => {
   });
   return (
     <div className="flex items-center justify-center w-full h-screen">
-      <div className="w-2/12">
+      <div className="w-60">
         <NavLink to="/">
           <div>Go home</div>
         </NavLink>
         <Grid container columns={{ xs: 4, sm: 8, md: 12 }}>
-          <Grid xs={4} sm={4} md={12}>
+          <Grid xs={4} sm={8} md={12}>
             <form className="flex flex-col justify-center" onSubmit={handleSummit}>
               {loginField.map((item) =>
                 GenInput({

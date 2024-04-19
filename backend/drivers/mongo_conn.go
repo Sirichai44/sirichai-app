@@ -23,15 +23,17 @@ func MongoDBConn(opt config.Database, mode string) (*MongoDBClient, error) {
 	} else {
 		dsn = opt.Url
 	}
-	fmt.Println("dsn---->: ", dsn)
+	
 	opts := options.Client()
 	opts.ApplyURI(dsn)
-	// if opt.Username != "" && opt.Password != "" {
-	// 	opts.SetAuth(options.Credential{
-	// 		Username: opt.Username,
-	// 		Password: opt.Password,
-	// 	})
-	// }
+
+	// Set auth dev mode
+	if mode == "dev" && opt.Username != "" && opt.Password != "" {
+		opts.SetAuth(options.Credential{
+			Username: opt.Username,
+			Password: opt.Password,
+		})
+	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
@@ -40,10 +42,10 @@ func MongoDBConn(opt config.Database, mode string) (*MongoDBClient, error) {
 	if err != nil {
 		return nil, err
 	}
-
+	fmt.Println("client--->", "connected")
 	if err := client.Ping(ctx, nil); err != nil {
 		return nil, err
 	}
-
+	fmt.Println("client--->", "ping")
 	return &MongoDBClient{Client: client, Database: client.Database(opt.Databasename)}, nil
 }
