@@ -28,4 +28,4 @@ COPY --from=backend /backend-build /app/
 EXPOSE 8080
 
 # Command to run the executable
-CMD ["./backend/cmd"]
+CMD ["./app/cmd"]
