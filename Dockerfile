@@ -9,7 +9,7 @@ WORKDIR /backend-build
 
 # Copy the source code from the current directory to the Working Directory inside the container
 # COPY /backend .
-COPY . .
+COPY ./backend .
 
 # Build the Go app
 RUN CGO_ENABLED=0 go build -o sirichai ./backend/cmd/main.go
