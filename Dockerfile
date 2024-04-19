@@ -25,10 +25,10 @@ ENV TZ="UTC"
 COPY --from=backend /backend-build /app/
 
 # Change the permissions of the file to be executable
-RUN chmod +x ./cmd
+RUN chmod +x ./sirichai
 
 # Expose port 8080 to the outside world
 EXPOSE 8080
 
 # Command to run the executable
-CMD ["./cmd"]
+CMD ["./sirichai"]
