@@ -7,6 +7,7 @@ import (
 	"net"
 	"os"
 	"os/signal"
+	"path/filepath"
 	"strconv"
 	"syscall"
 
@@ -41,7 +42,7 @@ func NewAppRoot() *cobra.Command {
 			if err != nil {
 				return err
 			}
-fmt.Println("conf--->", conf.Mode)
+			fmt.Println("conf--->", conf.Mode)
 			app, err := NewApp(conf)
 			if err != nil {
 				return err
@@ -64,14 +65,13 @@ fmt.Println("conf--->", conf.Mode)
 			return nil
 		},
 	}
-
-	rootCmd.PersistentFlags().StringVarP(&fileP, "config", "c", "", "config file path")
+	rootCmd.PersistentFlags().StringVar(&fileP,"config",fileConfig(),"Config file location path",)
 
 	return rootCmd
 }
 
 func NewApp(conf *config.AppConfig) (Apps, error) {
-	mgc, err := drivers.MongoDBConn(conf.Database,conf.Mode)
+	mgc, err := drivers.MongoDBConn(conf.Database, conf.Mode)
 	if err != nil {
 		slog.Error("MongoDB", slog.String("entry", conf.Database.Host+":"+fmt.Sprintf("%d", conf.Database.Port)), slog.String("connect", "failed"))
 		return nil, err
@@ -94,12 +94,12 @@ func (a *app) Runner(ctx context.Context) error {
 
 	g.Go(func() error {
 		var path string
-		if a.config.Mode == "dev"{
+		if a.config.Mode == "dev" {
 			path = net.JoinHostPort(a.config.Server.Addr, strconv.Itoa(a.config.Server.Port))
 		} else {
 			path = net.JoinHostPort(a.config.Server.Addr, strconv.Itoa(a.config.Server.Port))
 			fmt.Println("Proxy is running on", path)
-			
+
 		}
 		slog.Info("Server is running on", slog.String("entry", path))
 		return a.fiber.Listen(path)
@@ -116,4 +116,13 @@ func (a *app) Runner(ctx context.Context) error {
 	}
 
 	return g.Wait()
+}
+
+func fileConfig() string {
+	ext, err := os.Executable()
+	if err != nil {
+		panic(err)
+	}
+
+	return filepath.Join(filepath.Dir(ext), "conf"+"config.yml")
 }
