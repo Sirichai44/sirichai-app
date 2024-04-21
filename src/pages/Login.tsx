@@ -23,7 +23,7 @@ const Login = () => {
       defaultValue: ''
     }
   ];
-  const [login] = useLoginMutation();
+  const [login, loginResponse] = useLoginMutation();
   const handleSummit = Form.handleSubmit(async (data) => {
     const isValid = await Form.trigger();
     const id = useNotifyPromise('login...');
@@ -67,12 +67,17 @@ const Login = () => {
                 GenInput({
                   control: Form.control,
                   trigger: Form.trigger,
+                  disabled: loginResponse.isLoading,
                   error: Form.formState.errors[item.nameField]?.message || '',
                   ...item
                 })
               )}
               <div className="flex items-center justify-between">
-                <Button variant="plain" color="neutral" type="submit">
+                <Button
+                  variant="plain"
+                  color="neutral"
+                  type="submit"
+                  loading={loginResponse.isLoading}>
                   <span className="text-lg">Sign In</span>
                 </Button>
 
