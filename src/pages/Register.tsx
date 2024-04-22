@@ -91,6 +91,7 @@ const Register = () => {
                 GenInput({
                   control: Form.control,
                   trigger: Form.trigger,
+                  innerLabel: true,
                   disabled: registerResponse.isLoading,
                   error: Form.formState.errors[item.nameField]?.message || '',
                   ...item

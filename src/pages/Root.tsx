@@ -17,6 +17,9 @@ import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+import ThermostatRoundedIcon from '@mui/icons-material/ThermostatRounded';
+import AirRoundedIcon from '@mui/icons-material/AirRounded';
+import FilterDramaRoundedIcon from '@mui/icons-material/FilterDramaRounded';
 import { clearSessionUser } from '@/store/reducers/authReducer';
 
 const Root = () => {
@@ -53,7 +56,10 @@ const Root = () => {
     }
   }, [md]);
 
-  const proflie = useAppSelector((state) => state.auth.profile);
+  const { profile, weather } = useAppSelector((state) => ({
+    profile: state.auth.profile,
+    weather: state.auth.current_info.weather
+  }));
 
   const handleLogout = () => {
     useAppDispatch(clearSessionUser());
@@ -64,16 +70,36 @@ const Root = () => {
         className={`${collapsed ? 'w-16' : 'w-56'} transition-width duration-300 h-full flex flex-col`}>
         <div className="w-full h-auto">
           <div
-            className={`flex ${collapsed && 'flex-col-reverse'} ml-2 max-w-40 items-center justify-between mt-8 mb-4`}>
+            className={`ml-2 max-w-40 items-center mt-4 mb-2 bg-neutral-300 bg-opacity-30 dark:bg-zinc-800 rounded-lg`}>
+            <div className="flex items-center">
+              <img src={weather.icon} className="h-8" />
+              <small className="ml-2 leading-none text-center text-wrap max-w-20">
+                {weather.weather}
+              </small>
+            </div>
+            <div className="flex items-start max-h-12">
+              <div className="w-full max-h-6">
+                <ThermostatRoundedIcon style={{ height: '16px' }} />
+                <small>{Math.ceil(weather.temp - 273)} &deg;c</small>
+              </div>
+              <div className="w-full max-h-6">
+                <FilterDramaRoundedIcon style={{ height: '16px' }} />
+                <small>{weather.clouds} %</small>
+              </div>
+            </div>
+          </div>
+
+          <div
+            className={`flex ${collapsed && 'flex-col-reverse'} max-w-40 items-center justify-center mt-4 mb-2`}>
             {collapsed ? (
-              <Tooltip title="Sirichai" placement="right" arrow>
+              <Tooltip title={profile.username} size="md" placement="right" arrow>
                 <AccountCircleIcon />
               </Tooltip>
             ) : (
-              <span className="flex w-full font-bold">
+              <span className="flex items-center justify-start w-full ml-3 font-bold">
                 <span>
-                  <AccountCircleIcon />
-                  {proflie.username}
+                  <AccountCircleIcon style={{ marginBottom: '4px' }} />
+                  {profile.username}
                 </span>
               </span>
             )}
@@ -82,7 +108,7 @@ const Root = () => {
             <NavLink
               className={({ isActive }) =>
                 classNames(
-                  `px-2 py-2 ${!collapsed ? 'mx-4' : 'mx-2 justify-center'} rounded-lg border flex flex-row items-center text-md text-gray-800 dark:text-gray-200 hover:bg-gray-100 hover:border-gray-200 dark:hover:border-zinc-700 dark:hover:bg-zinc-900`,
+                  `px-2 py-2 ${!collapsed ? 'mx-1' : 'mx-2 justify-center'} rounded-lg border flex flex-row items-center text-md text-gray-800 dark:text-gray-200 hover:bg-gray-100 hover:border-gray-200 dark:hover:border-zinc-700 dark:hover:bg-zinc-900`,
                   isActive
                     ? 'bg-white drop-shadow-sm dark:bg-zinc-800 border-gray-200 dark:border-zinc-700'
                     : 'border-transparent'
@@ -113,7 +139,7 @@ const Root = () => {
           )}>
           <ButtonMode />
           <div>
-            {proflie.login && (
+            {profile.login && (
               <>
                 {!collapsed ? (
                   <Button
@@ -142,13 +168,13 @@ const Root = () => {
                 variant="plain"
                 color="neutral"
                 startDecorator={
-                  proflie.login ? (
+                  profile.login ? (
                     <LogoutRoundedIcon className="w-5 rotate-180 opacity-70" />
                   ) : (
                     <LoginRoundedIcon className="w-5 opacity-70" />
                   )
                 }>
-                {proflie.login ? (
+                {profile.login ? (
                   <span className="font-comfortaa" onClick={handleLogout}>
                     Logout
                   </span>
@@ -160,7 +186,7 @@ const Root = () => {
               </Button>
             ) : (
               <>
-                {proflie.login ? (
+                {profile.login ? (
                   <Tooltip title="Logout" placement="right" arrow>
                     <IconButton onClick={handleLogout}>
                       <LogoutRoundedIcon className="w-5 rotate-180 opacity-70" />

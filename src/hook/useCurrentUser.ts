@@ -1,30 +1,28 @@
 import { setProfile } from '@/store/reducers/authReducer';
 import { useAppDispatch } from '@/store/store';
 import { JwtPayload, jwtDecode } from 'jwt-decode';
+import moment from 'moment';
 
 interface User extends JwtPayload {
   username: string;
   email: string;
   exp: number;
 }
-
-const useCurrentUser = () => {
-  // const currentUser = useAppSelector((state) => state.auth.profile);
+interface IUserReturn {
+  isExpired: boolean;
+}
+const useCurrentUser = (): IUserReturn => {
   const token = localStorage.getItem('token');
-  // if (currentUser.token !== '') {
-  //   const data: User = jwtDecode(currentUser.token);
-  //   useAppDispatch(
-  //     setProfile({
-  //       username: data.username,
-  //       email: data.email,
-  //       token: currentUser.token,
-  //       login: true
-  //     })
-  //   );
-
-  // } else
   if (token) {
     const user: User = jwtDecode(token);
+
+    const isExpired = moment(user.exp).isBefore(moment().unix());
+
+    if (isExpired) {
+      localStorage.removeItem('token');
+      return { isExpired: true };
+    }
+
     useAppDispatch(
       setProfile({
         username: user.username,
@@ -33,10 +31,8 @@ const useCurrentUser = () => {
         login: true
       })
     );
-    return true;
-  } else {
-    return false;
   }
+  return { isExpired: false };
 };
 
 export default useCurrentUser;
