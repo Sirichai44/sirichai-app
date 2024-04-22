@@ -12,6 +12,7 @@ export interface InputProps {
   error: any;
   triggerField?: string;
   placeholder?: string;
+  disabled: boolean;
   defaultValue: string | { label: string; value: string };
 }
 
@@ -31,6 +32,7 @@ const GenInput: FC<InputProps> = (props) => {
                 props.trigger(props.triggerField);
               }
             }}
+            disabled={props.disabled}
             error={!!props.error}
             // endDecorator={props.error !== '' ? ErrorInput(props.error) : null}
             slots={{ input: InnerInput }}

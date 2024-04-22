@@ -29,7 +29,7 @@ const Certificate = () => {
           <Grid xs={4} sm={4} md={6} lg={6} xl={4} key={cer.id} className="mb-10 max-h-72">
             <img
               src={cer.source}
-              className="object-contain w-full h-full mb-3 cursor-pointer"
+              className="object-contain w-full h-full mb-2 cursor-pointer"
               alt="Certificate"
               onClick={() => handleOpen(cer.source)}
             />
@@ -37,7 +37,7 @@ const Certificate = () => {
               href={cer.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex justify-center hover:text-zinc-500 dark:hover:text-gray-100">
+              className="flex justify-center text-sm hover:text-zinc-500 dark:hover:text-gray-100">
               {cer.name}
             </a>
           </Grid>

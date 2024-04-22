@@ -58,7 +58,7 @@ const Carousol = () => {
           </SwiperSlide>
         ))}
 
-        <div className="slider-controler">
+        {/* <div className="slider-controler">
           <div className="swiper-button-prev slider-arrow">
             <ArrowCircleLeftRoundedIcon className="prev" />
           </div>
@@ -66,7 +66,7 @@ const Carousol = () => {
           <div className="swiper-button-next slider-arrow">
             <ArrowCircleRightRoundedIcon className="next" />
           </div>
-        </div>
+        </div> */}
       </Swiper>
     </div>
   );
