@@ -21,7 +21,7 @@ export const usePosition = () => {
   navigator.geolocation.getCurrentPosition(foundLocation, noLocation);
 };
 
-const foundLocation = (position: GeolocationPosition) => {
+const foundLocation = async (position: GeolocationPosition) => {
   //get latitude and longitude
   const latitude = position.coords.latitude;
   const longitude = position.coords.longitude;
@@ -44,6 +44,7 @@ const useWeather = (lat: number, log: number) => {
       console.log('weather---', res.data);
       useAppDispatch(
         setWeather({
+          loading: false,
           weather: res.data.weather[0].main,
           description: res.data.weather[0].description,
           icon: `https://openweathermap.org/img/wn/${res.data.weather[0].icon}.png`,
@@ -62,7 +63,26 @@ const useWeather = (lat: number, log: number) => {
         })
       );
     })
-    .catch((err) => {
-      console.log('error---', err);
+    .catch((_) => {
+      useAppDispatch(
+        setWeather({
+          loading: true,
+          weather: '',
+          description: '',
+          icon: '',
+          temp: 0,
+          feels_like: 0,
+          humidity: 0,
+          wind: { speed: 0, deg: 0 },
+          clouds: 0,
+          system: {
+            country: '',
+            name: '',
+            sunrise: 0,
+            sunset: 0,
+            timezone: 0
+          }
+        })
+      );
     });
 };

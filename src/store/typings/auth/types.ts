@@ -40,6 +40,7 @@ export interface IPosition {
 }
 
 export interface IWeather {
+  loading: boolean;
   weather: string;
   description: string;
   icon: string;

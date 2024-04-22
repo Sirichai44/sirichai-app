@@ -16,6 +16,7 @@ function App() {
       await usePosition();
       await useOperatingSystem();
       // await useWeather();
+
       if (isExpired) {
         useNotify('warning', 'Token expired, please login again');
         setTimeout(() => {

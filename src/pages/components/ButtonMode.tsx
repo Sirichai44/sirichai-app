@@ -15,11 +15,15 @@ const ButtonMode: FC<ButtonModeProps> = ({ mobile }) => {
   return (
     <IconButton
       style={{ height: 40, width: mobile ? 80 : 40, paddingLeft: 10, paddingRight: 10 }}
-      className={`rounded-full`}
+      className={`rounded-full w-6`}
       onClick={() => {
         setMode(mode === 'light' ? 'dark' : 'light');
       }}>
-      {mode === 'light' ? <LightModeIcon /> : <DarkModeIcon />}
+      {mode === 'light' ? (
+        <LightModeIcon style={{ color: '#f43f5e' }} />
+      ) : (
+        <DarkModeIcon style={{ color: '#eab308' }} />
+      )}
       {mobile && <span>{mode === 'light' ? 'Light' : 'Dark'}</span>}
     </IconButton>
   );

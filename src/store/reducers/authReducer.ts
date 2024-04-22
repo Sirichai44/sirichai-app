@@ -15,6 +15,7 @@ const initialState: types.IStateAuth = {
       longitude: 100.5564029 //set default th
     },
     weather: {
+      loading: true,
       weather: '',
       description: '',
       icon: '',

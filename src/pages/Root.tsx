@@ -8,7 +8,7 @@ import ButtonMode from './components/ButtonMode';
 import { Suspense, useEffect } from 'react';
 import useResponsiveWidth from '@/hook/useResponsiveWidth';
 import useLocalStorage from 'react-use/lib/useLocalStorage';
-import { Button, IconButton, Tooltip } from '@mui/joy';
+import { Button, CircularProgress, IconButton, Tooltip } from '@mui/joy';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -18,7 +18,7 @@ import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import ThermostatRoundedIcon from '@mui/icons-material/ThermostatRounded';
-import AirRoundedIcon from '@mui/icons-material/AirRounded';
+// import AirRoundedIcon from '@mui/icons-material/AirRounded';
 import FilterDramaRoundedIcon from '@mui/icons-material/FilterDramaRounded';
 import { clearSessionUser } from '@/store/reducers/authReducer';
 
@@ -56,10 +56,8 @@ const Root = () => {
     }
   }, [md]);
 
-  const { profile, weather } = useAppSelector((state) => ({
-    profile: state.auth.profile,
-    weather: state.auth.current_info.weather
-  }));
+  const profile = useAppSelector((state) => state.auth.profile);
+  const weather = useAppSelector((state) => state.auth.current_info.weather);
 
   const handleLogout = () => {
     useAppDispatch(clearSessionUser());
@@ -70,23 +68,55 @@ const Root = () => {
         className={`${collapsed ? 'w-16' : 'w-56'} transition-width duration-300 h-full flex flex-col`}>
         <div className="w-full h-auto">
           <div
-            className={`ml-2 max-w-40 items-center mt-4 mb-2 bg-neutral-300 bg-opacity-30 dark:bg-zinc-800 rounded-lg`}>
-            <div className="flex items-center">
-              <img src={weather.icon} className="h-8" />
-              <small className="ml-2 leading-none text-center text-wrap max-w-20">
-                {weather.weather}
-              </small>
-            </div>
-            <div className="flex items-start max-h-12">
-              <div className="w-full max-h-6">
-                <ThermostatRoundedIcon style={{ height: '16px' }} />
-                <small>{Math.ceil(weather.temp - 273)} &deg;c</small>
+            className={`mx-2 max-w-40 items-center mt-4 mb-2 bg-neutral-300 bg-opacity-30 dark:bg-zinc-800 rounded-lg`}>
+            {weather.loading ? (
+              <div className="flex items-center justify-center h-8">
+                <CircularProgress thickness={2} size="sm" />
               </div>
-              <div className="w-full max-h-6">
-                <FilterDramaRoundedIcon style={{ height: '16px' }} />
-                <small>{weather.clouds} %</small>
-              </div>
-            </div>
+            ) : (
+              <>
+                {collapsed ? (
+                  <div className="flex justify-center">
+                    {weather.temp === 0 ? (
+                      <img src="src\assets\unknown.png" className="h-8" />
+                    ) : (
+                      <img src={weather.icon} className="h-8" />
+                    )}
+                  </div>
+                ) : (
+                  <>
+                    {weather.temp === 0 ? (
+                      <div className="flex">
+                        <img src="src\assets\unknown.png" className="h-8" />
+
+                        <small className="mt-1 ml-2 leading-none text-center text-wrap max-w-20">
+                          Can't get weather
+                        </small>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="flex items-center">
+                          <img src={weather.icon} className="h-8" />
+                          <small className="ml-2 leading-none text-center text-wrap max-w-20">
+                            {weather.weather}
+                          </small>
+                        </div>
+                        <div className="flex items-start max-h-12">
+                          <div className="w-full max-h-6">
+                            <ThermostatRoundedIcon style={{ height: '16px' }} />
+                            <small>{Math.ceil(weather.temp - 273)} &deg;c</small>
+                          </div>
+                          <div className="w-full max-h-6">
+                            <FilterDramaRoundedIcon style={{ height: '16px' }} />
+                            <small>{weather.clouds} %</small>
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </>
+                )}
+              </>
+            )}
           </div>
 
           <div
@@ -99,7 +129,7 @@ const Root = () => {
               <span className="flex items-center justify-start w-full ml-3 font-bold">
                 <span>
                   <AccountCircleIcon style={{ marginBottom: '4px' }} />
-                  {profile.username}
+                  <span className="ml-2">{profile.username}</span>
                 </span>
               </span>
             )}
@@ -137,6 +167,29 @@ const Root = () => {
             'w-full grow h-auto flex flex-col justify-end mb-2',
             collapsed ? 'items-center' : 'items-end'
           )}>
+          <div>
+            {collapsed ? (
+              <Tooltip title="Assistant" placement="right" arrow>
+                <IconButton>
+                  <img src="src\assets\openai.png" alt="open-ai-img" className="w-6" />
+                </IconButton>
+              </Tooltip>
+            ) : (
+              <Button
+                variant="plain"
+                color="neutral"
+                className="px-1"
+                style={{
+                  width: 40,
+                  height: 40,
+                  paddingLeft: 10,
+                  paddingRight: 10
+                }}>
+                <img src="src\assets\openai.png" alt="open-ai-img" className="object-fill" />
+              </Button>
+            )}
+          </div>
+
           <ButtonMode />
           <div>
             {profile.login && (
