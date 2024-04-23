@@ -34,7 +34,8 @@ const initialState: types.IStateAuth = {
     }
   },
   assistant: {
-    content: ''
+    content: '',
+    finish: false
   }
 };
 
@@ -73,6 +74,9 @@ const authSlice = createSlice({
       state.assistant.content += ' ' + action.payload.text;
       // state.assistant.content
     },
+    setAssistantFinish: (state, action: PayloadAction<boolean>) => {
+      state.assistant.finish = action.payload;
+    },
     clearAssistant: (state) => {
       state.assistant.content = '';
       // state.assistant.content = [];
@@ -89,6 +93,7 @@ export const {
   setSystem,
   setWeather,
   setAssistant,
+  setAssistantFinish,
   clearAssistant
 } = authSlice.actions;
 

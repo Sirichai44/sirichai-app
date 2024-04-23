@@ -1,6 +1,7 @@
-import { setAssistant } from '@/store/reducers/authReducer';
+import { setAssistant, setAssistantFinish } from '@/store/reducers/authReducer';
 import { useAppDispatch } from '@/store/store';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { text } from 'stream/consumers';
 
 const keygemini = 'AIzaSyBw6FlYtaHpU1QYKmKUkES_vAnRDrrMSf0';
 
@@ -22,20 +23,16 @@ const run = async () => {
   for await (const chunk of results.stream) {
     if (chunk.candidates) {
       const { role, parts } = chunk.candidates[0].content;
-      // content.push({ text: parts[0].text, role });
-      console.log('text--->', parts[0].text?.replace('\n', ''));
-      const ntext = parts[0].text?.replace(/\*/g, '');
-      const ntext2 = ntext?.replace(/\*(?=\*)/g, '\n');
-
-      // console.log('ntext--->', ntext2);
-
-      useAppDispatch(setAssistant({ text: parts[0]?.text || '', role }));
+      useAppDispatch(
+        setAssistant({ text: parts[0]?.text.replace(/(\r\n|\n|\r|\*)/gm, ' ') || '', role })
+      );
     }
     console.log('chunk-->', chunk);
 
     // console.log('content-->', content);
   }
 
+  useAppDispatch(setAssistantFinish(true));
   console.log('------finish------');
   // console.log('content-->', content);
 };
