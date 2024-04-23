@@ -18,10 +18,10 @@ import { useAppDispatch, useAppSelector } from '@/store/store';
 
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import ThermostatRoundedIcon from '@mui/icons-material/ThermostatRounded';
-// import AirRoundedIcon from '@mui/icons-material/AirRounded';
+import AirRoundedIcon from '@mui/icons-material/AirRounded';
 import FilterDramaRoundedIcon from '@mui/icons-material/FilterDramaRounded';
 import { clearSessionUser } from '@/store/reducers/authReducer';
-
+import run from '@/hook/useAssistant';
 const Root = () => {
   const navLink = [
     { id: 'home', path: '/', name: 'Home', icon: <HomeRoundedIcon /> },
@@ -62,6 +62,7 @@ const Root = () => {
   const handleLogout = () => {
     useAppDispatch(clearSessionUser());
   };
+
   return (
     <div className="flex w-full h-screen">
       <div
@@ -76,13 +77,63 @@ const Root = () => {
             ) : (
               <>
                 {collapsed ? (
-                  <div className="flex justify-center">
-                    {weather.temp === 0 ? (
-                      <img src="src\assets\unknown.png" className="h-8" />
-                    ) : (
-                      <img src={weather.icon} className="h-8" />
-                    )}
-                  </div>
+                  <Tooltip
+                    title=<>
+                      {weather.temp === 0 ? (
+                        <div className="flex">
+                          <img src="src\assets\unknown.png" className="h-8" />
+
+                          <small className="mt-1 ml-2 leading-none text-center text-wrap max-w-20">
+                            Can't get weather
+                          </small>
+                        </div>
+                      ) : (
+                        <>
+                          <div className="items-start max-w-24 ">
+                            <div className="flex">
+                              <div className="mr-2 max-h-6">
+                                <ThermostatRoundedIcon
+                                  className="mr-1"
+                                  style={{ height: '16px' }}
+                                />
+                                <small>{Math.ceil(weather.temp - 273)} &deg;c</small>
+                              </div>
+                              <div className="flex items-center max-h-6">
+                                <img
+                                  src="src/assets/humidity.svg"
+                                  className="mr-1"
+                                  style={{ height: '16px' }}
+                                />
+                                <small>{weather.clouds} %</small>
+                              </div>
+                            </div>
+
+                            <div className="flex">
+                              <div className="mr-1 max-h-6">
+                                <AirRoundedIcon style={{ height: '16px' }} />
+                                <small>{Math.floor(weather.wind.speed)} m/s</small>
+                              </div>
+                              <div className="max-h-6">
+                                <FilterDramaRoundedIcon
+                                  style={{ height: '16px', marginRight: '4px' }}
+                                />
+                                <small>{weather.clouds} %</small>
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </>
+                    placement="right"
+                    arrow>
+                    <div className="flex justify-center">
+                      {weather.temp === 0 ? (
+                        <img src="src\assets\unknown.png" className="h-8" />
+                      ) : (
+                        <img src={weather.icon} className="h-8" />
+                      )}
+                    </div>
+                  </Tooltip>
                 ) : (
                   <>
                     {weather.temp === 0 ? (
@@ -126,7 +177,7 @@ const Root = () => {
                 <AccountCircleIcon />
               </Tooltip>
             ) : (
-              <span className="flex items-center justify-start w-full ml-3 font-bold">
+              <span className="flex items-center justify-start w-full ml-3 font-bold" onClick={run}>
                 <span>
                   <AccountCircleIcon style={{ marginBottom: '4px' }} />
                   <span className="ml-2">{profile.username}</span>
@@ -168,42 +219,35 @@ const Root = () => {
             collapsed ? 'items-center' : 'items-end'
           )}>
           <div>
-            {collapsed ? (
-              <Tooltip title="Assistant" placement="right" arrow>
-                <IconButton>
-                  <img src="src\assets\openai.png" alt="open-ai-img" className="w-6" />
-                </IconButton>
-              </Tooltip>
-            ) : (
-              <Button
-                variant="plain"
-                color="neutral"
-                className="px-1"
-                style={{
-                  width: 40,
-                  height: 40,
-                  paddingLeft: 10,
-                  paddingRight: 10
-                }}>
-                <img src="src\assets\openai.png" alt="open-ai-img" className="object-fill" />
-              </Button>
-            )}
+            <NavLink to="/assistant">
+              {collapsed ? (
+                <Tooltip title="Assistant" placement="right" arrow>
+                  <IconButton>
+                    <img src="src\assets\openai.png" alt="open-ai-img" className="w-6" />
+                  </IconButton>
+                </Tooltip>
+              ) : (
+                <Button
+                  variant="plain"
+                  color="neutral"
+                  className="px-1"
+                  style={{
+                    width: 40,
+                    height: 40,
+                    paddingLeft: 10,
+                    paddingRight: 10
+                  }}>
+                  <img src="src\assets\openai.png" alt="open-ai-img" className="object-fill" />
+                </Button>
+              )}
+            </NavLink>
           </div>
 
           <ButtonMode />
           <div>
             {profile.login && (
               <>
-                {!collapsed ? (
-                  <Button
-                    variant="plain"
-                    color="neutral"
-                    startDecorator={<SettingsRoundedIcon className="w-5 opacity-70" />}>
-                    <NavLink to="/setting">
-                      <span className="font-comfortaa">Setting</span>
-                    </NavLink>
-                  </Button>
-                ) : (
+                {collapsed ? (
                   <Tooltip title="Setting" placement="right" arrow>
                     <NavLink to="/setting">
                       <IconButton>
@@ -211,33 +255,21 @@ const Root = () => {
                       </IconButton>
                     </NavLink>
                   </Tooltip>
+                ) : (
+                  <Button
+                    variant="plain"
+                    color="neutral"
+                    startDecorator={<SettingsRoundedIcon className="w-5 opacity-70" />}>
+                    <NavLink to="/setting">
+                      <span>Setting</span>
+                    </NavLink>
+                  </Button>
                 )}
               </>
             )}
           </div>
           <div>
-            {!collapsed ? (
-              <Button
-                variant="plain"
-                color="neutral"
-                startDecorator={
-                  profile.login ? (
-                    <LogoutRoundedIcon className="w-5 rotate-180 opacity-70" />
-                  ) : (
-                    <LoginRoundedIcon className="w-5 opacity-70" />
-                  )
-                }>
-                {profile.login ? (
-                  <span className="font-comfortaa" onClick={handleLogout}>
-                    Logout
-                  </span>
-                ) : (
-                  <NavLink to="/auth/login">
-                    <span className="font-comfortaa"> Sing In</span>
-                  </NavLink>
-                )}
-              </Button>
-            ) : (
+            {collapsed ? (
               <>
                 {profile.login ? (
                   <Tooltip title="Logout" placement="right" arrow>
@@ -255,6 +287,25 @@ const Root = () => {
                   </Tooltip>
                 )}
               </>
+            ) : (
+              <Button
+                variant="plain"
+                color="neutral"
+                startDecorator={
+                  profile.login ? (
+                    <LogoutRoundedIcon className="w-5 rotate-180 opacity-70" />
+                  ) : (
+                    <LoginRoundedIcon className="w-5 opacity-70" />
+                  )
+                }>
+                {profile.login ? (
+                  <span onClick={handleLogout}>Logout</span>
+                ) : (
+                  <NavLink to="/auth/login">
+                    <span> Sing In</span>
+                  </NavLink>
+                )}
+              </Button>
             )}
           </div>
 
@@ -264,7 +315,7 @@ const Root = () => {
                 variant="plain"
                 color="neutral"
                 startDecorator={<ChevronLeftRoundedIcon className="w-5 opacity-70" />}>
-                <span className="font-comfortaa"> Collapse</span>
+                <span> Collapse</span>
               </Button>
             ) : (
               <Tooltip title="Expand" placement="right" arrow>

@@ -32,6 +32,9 @@ const initialState: types.IStateAuth = {
         timezone: 0
       }
     }
+  },
+  assistant: {
+    content: ''
   }
 };
 
@@ -50,7 +53,12 @@ const authSlice = createSlice({
     },
     clearSessionUser: (state) => {
       localStorage.removeItem('token');
-      state.profile = initialState.profile;
+      state.profile = {
+        login: false,
+        username: '',
+        email: '',
+        token: ''
+      };
     },
     setPosition: (state, action: PayloadAction<types.IPosition>) => {
       state.current_info.position = action.payload;
@@ -60,18 +68,28 @@ const authSlice = createSlice({
     },
     setWeather: (state, action: PayloadAction<types.IWeather>) => {
       state.current_info.weather = action.payload;
+    },
+    setAssistant: (state, action: PayloadAction<{ text: string; role: string }>) => {
+      state.assistant.content += ' ' + action.payload.text;
+      // state.assistant.content
+    },
+    clearAssistant: (state) => {
+      state.assistant.content = '';
+      // state.assistant.content = [];
     }
   }
 });
 
 export const {
   setProfile,
+  setLogin,
   setSessionUser,
   clearSessionUser,
   setPosition,
-  setLogin,
   setSystem,
-  setWeather
+  setWeather,
+  setAssistant,
+  clearAssistant
 } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -15,6 +15,7 @@ const Certificate = lazy(() => import('@/pages/Certificate'));
 const Login = lazy(() => import('@/pages/Login'));
 const Register = lazy(() => import('@/pages/Register'));
 const Setting = lazy(() => import('@/pages/Setting'));
+const Assistant = lazy(() => import('@/pages/Assistant'));
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,14 @@ const router = createBrowserRouter([
             element: (
               <AuthProvider>
                 <Setting />
+              </AuthProvider>
+            )
+          },
+          {
+            path: 'assistant',
+            element: (
+              <AuthProvider>
+                <Assistant />
               </AuthProvider>
             )
           }

@@ -11,6 +11,10 @@ mongo:
   username: root
   password: P@ssw0rd
 
+assistant:
+  url: https://api.dify.ai/v1
+  key: app-cje8JxG7HCJMJF1Dt1V0WJpR
+
 secret:
   key: sirichai-44-secret-key
 #KzHRIr2802KPFz0R
