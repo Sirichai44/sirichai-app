@@ -1,14 +1,14 @@
 export interface IStateAuth {
   profile: IAuthProfile;
   current_info: ICurrentInfo;
-  assistant: { content: string; finish: boolean };
-  // assistant: { content: IContentAssistant[] };
+  assistant: { content: IContentAssistant[] };
 }
 
 export interface IContentAssistant {
   text: string;
   role: string;
   finish: boolean;
+  resp_time: number;
 }
 
 //call register

@@ -19,13 +19,14 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { useState } from 'react';
-import { CertificateList } from '@/hook/List';
+import { CertificateList, SkillList } from '@/hook/List';
 const Carousol = () => {
   const [firstSwiper, setFirstSwiper] = useState(null);
   const [secondSwiper, setSecondSwiper] = useState(null);
   const certi = CertificateList();
+  const skills = SkillList();
   return (
-    <div className="overflow-x-hidden border border-blue-400 w-96">
+    <div className="w-2/6 overflow-x-hidden border border-blue-400">
       <Swiper
         modules={[Pagination, Navigation, A11y, Autoplay]}
         spaceBetween={50}
@@ -48,13 +49,19 @@ const Carousol = () => {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev'
         }}>
-        {certi.slice(0, 6).map((cer) => (
-          <SwiperSlide key={cer.id}>
-            <img
-              src={cer.source}
-              className="object-contain w-full h-full mb-3 cursor-pointer"
-              alt="Certificate"
-            />
+        {skills.slice(0, 6).map((skill) => (
+          <SwiperSlide key={skill.id}>
+            <div>
+              <div className="flex items-center justify-center w-16 h-16 rounded-full shadow-md dark:bg-zinc-800 bg-zinc-200 bg-opacity-70">
+                <img src={skill.source} style={{ height: 40, width: 40 }} />
+              </div>
+              <div className="flex items-center justify-center w-16 h-16 rounded-full shadow-md dark:bg-zinc-800 bg-zinc-200 bg-opacity-70">
+                <img src={skill.source} style={{ height: 40, width: 40 }} />
+              </div>
+              <div className="flex items-center justify-center w-16 h-16 rounded-full shadow-md dark:bg-zinc-800 bg-zinc-200 bg-opacity-70">
+                <img src={skill.source} style={{ height: 40, width: 40 }} />
+              </div>
+            </div>
           </SwiperSlide>
         ))}
 

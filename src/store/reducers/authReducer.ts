@@ -34,8 +34,7 @@ const initialState: types.IStateAuth = {
     }
   },
   assistant: {
-    content: '',
-    finish: false
+    content: []
   }
 };
 
@@ -70,16 +69,15 @@ const authSlice = createSlice({
     setWeather: (state, action: PayloadAction<types.IWeather>) => {
       state.current_info.weather = action.payload;
     },
-    setAssistant: (state, action: PayloadAction<{ text: string; role: string }>) => {
-      state.assistant.content += ' ' + action.payload.text;
+    setAssistant: (state, action: PayloadAction<types.IContentAssistant>) => {
+      state.assistant.content.push(action.payload);
       // state.assistant.content
     },
-    setAssistantFinish: (state, action: PayloadAction<boolean>) => {
-      state.assistant.finish = action.payload;
-    },
+    // setAssistantFinish: (state, action: PayloadAction<boolean>) => {
+    //   state.assistant.finish = action.payload;
+    // },
     clearAssistant: (state) => {
-      state.assistant.content = '';
-      // state.assistant.content = [];
+      state.assistant.content = [];
     }
   }
 });
@@ -93,7 +91,7 @@ export const {
   setSystem,
   setWeather,
   setAssistant,
-  setAssistantFinish,
+  // setAssistantFinish,
   clearAssistant
 } = authSlice.actions;
 

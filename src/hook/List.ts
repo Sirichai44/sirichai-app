@@ -149,3 +149,20 @@ export const CertificateList = () => {
 
   return certificates.sort((a, b) => moment(b.date).diff(moment(a.date)));
 };
+
+export const SkillList = () => {
+  const skills: { id: string; url: string; source: string }[] = [
+    {
+      id: 'react',
+      url: 'https://reactjs.org/',
+      source: 'https://profilinator.rishav.dev/skills-assets/react-original-wordmark.svg'
+    },
+    {
+      id: 'golang',
+      url: 'https://go.dev/',
+      source: 'https://profilinator.rishav.dev/skills-assets/go-original.svg'
+    }
+  ];
+
+  return skills;
+};

@@ -1,7 +1,5 @@
 import { Button } from '@mui/joy';
 import SmartToyRoundedIcon from '@mui/icons-material/SmartToyRounded';
-import Markdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 
 import run from '@/hook/useAssistant';
 import { useAppDispatch, useAppSelector } from '@/store/store';
@@ -11,33 +9,6 @@ import { useEffect, useState } from 'react';
 const Assistant = () => {
   const assistant = useAppSelector((state) => state.auth.assistant);
 
-  const [index, setIndex] = useState(0);
-  const [intervalIdState, setIntervalId] = useState<NodeJS.Timeout>();
-  // useEffect(() => {
-  //   if (assistant.finish) {
-  //     console.log('assistant finish', assistant.finish);
-
-  //     clearInterval(intervalIdState);
-  //     return;
-  //   } else {
-  //     console.log('assistant ', 11111111111);
-
-  //     const intervalId = setInterval(() => {
-  //       setIndex((prevIndex) => (prevIndex + 1) % assistant.content.length);
-  //     }, 20);
-  //     setIntervalId(intervalId);
-  //   }
-
-  //   return () => clearInterval(intervalIdState);
-  // }, [assistant.content]);
-
-  // useEffect(() => {
-  //   if (assistant.finish) {
-  //     console.log('assistant finish', assistant.finish);
-
-  //     clearInterval(intervalIdState);
-  //   }
-  // }, [assistant.finish]);
   return (
     <div className="flex items-center justify-center w-full h-full p-10 overflow-auto">
       <div className="flex flex-col">
@@ -58,7 +29,7 @@ const Assistant = () => {
         }}>
         <SmartToyRoundedIcon />
 
-        <span>{assistant.content.substring(0, index)}</span>
+        {/* <span>{textShow}</span> */}
       </div>
     </div>
   );
