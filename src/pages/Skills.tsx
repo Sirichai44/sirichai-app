@@ -1,4 +1,10 @@
 import useResponsiveWidth from '@/hook/useResponsiveWidth';
+import coursera from '@/assets/coursera.png';
+import udemy from '@/assets/udemy.png';
+import palette from '@/assets/palette.png';
+import programming from '@/assets/programming.png';
+import docker from '@/assets/docker.png';
+import server from '@/assets/server.png';
 
 const Skills = () => {
   const { sm, md, xl, lg } = useResponsiveWidth();
@@ -11,9 +17,9 @@ const Skills = () => {
     <div className={`flex w-screen h-auto p-8 flex-wrap`}>
       {/* <div className={`${lg ? 'w-4/12' : 'w-full flex'} p-8 border border-blue-400`}> */}
       <div
-        className={`mb-8 ${!sm ? 'w-full' : !lg ? 'w-6/12' : 'w-4/12'} mr-8 rounded-3xl bg-gradient-to-tr from-gray-900 from-70%  to-blue-950 p-8 relative`}>
+        className={`mb-8 ${!sm ? 'w-full' : !lg ? 'w-6/12' : 'w-4/12 mr-8'} rounded-3xl bg-gradient-to-tr from-gray-900 from-70%  to-blue-950 p-8 relative`}>
         <div className="flex items-center mb-8">
-          <img src="src/assets/coursera.png" className="w-20 mr-4" />
+          <img src={coursera} className="w-20 mr-4" />
           <div className="flex flex-col">
             <span className="text-sm font-bold text-blue-400">Coursera Certificcate</span>
             <span className="text-xs">Google data analytics</span>
@@ -21,7 +27,7 @@ const Skills = () => {
         </div>
 
         <div className="flex items-center">
-          <img src="src/assets/udemy.png" className="w-20 mr-4 rounded-full" />
+          <img src={udemy} className="w-20 mr-4 rounded-full" />
           <div className="flex flex-col">
             <span className="text-sm font-bold text-blue-400">Udemy Certificate</span>
             {/* <span className="text-xs">Google data analytics</span> */}
@@ -32,10 +38,10 @@ const Skills = () => {
       </div>
 
       <div
-        className={`mb-8 ${!sm ? 'w-full' : 'w-4/12 '} mr-8 rounded-3xl bg-gradient-to-tr from-gray-900 from-70% to-blue-950 p-8`}>
+        className={`mb-8 ${!sm ? 'w-full' : 'w-4/12 mr-8'} rounded-3xl bg-gradient-to-tr from-gray-900 from-70% to-blue-950 p-8`}>
         <div className="h-full">
           <div className="flex items-center">
-            <img src="src/assets/palette.png" className="w-6 mr-2" />
+            <img src={palette} className="w-6 mr-2" />
             <span className="text-sm">Client side</span>
           </div>
           <div className="flex flex-wrap h-auto my-4">
@@ -53,9 +59,9 @@ const Skills = () => {
 
       {/* <div className={`${lg ? 'w-4/12' : 'w-full'} h-full p-8 border border-blue-400`}> */}
       <div
-        className={`mb-8 ${!sm ? 'w-full' : !lg ? 'w-7/12' : 'w-3/12'} rounded-3xl h-auto bg-gradient-to-tr from-gray-900 from-70% to-blue-950 p-8 mr-8`}>
+        className={`mb-8 ${!sm ? 'w-full' : !lg ? 'w-7/12' : 'w-3/12 mr-8'} rounded-3xl h-auto bg-gradient-to-tr from-gray-900 from-70% to-blue-950 p-8`}>
         <div className="flex items-center">
-          <img src="src/assets/programming.png" className="w-6 mr-2" />
+          <img src={programming} className="w-6 mr-2" />
           <span className="text-sm">Programming languages and frmeworks</span>
         </div>
 
@@ -74,9 +80,9 @@ const Skills = () => {
 
       {/* <div className={`${lg ? 'w-4/12' : 'w-6/12'} h-full p-8 border border-blue-400 `}> */}
       <div
-        className={`mb-8 ${!sm ? 'w-full' : 'w-4/12'} rounded-3xl max-h-60 bg-gradient-to-tr from-gray-900 from-70% to-blue-950 p-8 mr-8`}>
+        className={`mb-8 ${!sm ? 'w-full' : 'w-4/12 mr-8'} rounded-3xl max-h-60 bg-gradient-to-tr from-gray-900 from-70% to-blue-950 p-8 `}>
         <div className="flex items-center">
-          <img src="src/assets/docker.png" className="w-6 mr-2" />
+          <img src={docker} className="w-6 mr-2" />
           <span className="text-sm">Devops</span>
         </div>
 
@@ -93,7 +99,7 @@ const Skills = () => {
 
       <div className="mb-8 rounded-3xl w-auto bg-gradient-to-tr from-gray-900 from-70% to-blue-950 p-8">
         <div className="flex items-center">
-          <img src="src/assets/server.png" className="w-6 mr-2" />
+          <img src={server} className="w-6 mr-2" />
           <span className="text-sm">Data storage and caching</span>
         </div>
 
