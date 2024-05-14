@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import * as EP from '@/store/services/endpoint';
+import { IAuthRegister } from '../typings/auth/types';
 // import { useAppSelector } from '../store';
 
 // const profile = useAppSelector((state) => state.auth.profile);
@@ -8,7 +9,7 @@ const authApi: any = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: isProd ? EP.prod : undefined }),
   endpoints: (builder) => ({
     login: builder.mutation({
-      query: (body) => ({
+      query: (body: { email: string; password: string }) => ({
         url: EP.Login,
         method: 'POST',
         // headers: {
@@ -18,7 +19,7 @@ const authApi: any = createApi({
       })
     }),
     register: builder.mutation({
-      query: (body) => ({
+      query: (body: IAuthRegister) => ({
         url: EP.Register,
         method: 'POST',
         body

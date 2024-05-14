@@ -10,7 +10,7 @@ import { setProfile, setSessionUser } from '@/store/reducers/authReducer';
 import { useAppSelector, useAppDispatch } from '@/store/store';
 import { useNotifyPromise, useNotifyResolve } from '@/hook/useNotify';
 import useNavigateTo from '@/hook/useNavigateTo';
-import { useState } from 'react';
+
 const Register = () => {
   const navagateTo = useNavigateTo();
   const Form = useFormReact(RegisterSchema);
@@ -91,6 +91,7 @@ const Register = () => {
                 GenInput({
                   control: Form.control,
                   trigger: Form.trigger,
+                  innerLabel: true,
                   disabled: registerResponse.isLoading,
                   error: Form.formState.errors[item.nameField]?.message || '',
                   ...item

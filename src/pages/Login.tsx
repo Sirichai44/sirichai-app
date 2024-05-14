@@ -67,6 +67,7 @@ const Login = () => {
                 GenInput({
                   control: Form.control,
                   trigger: Form.trigger,
+                  innerLabel: true,
                   disabled: loginResponse.isLoading,
                   error: Form.formState.errors[item.nameField]?.message || '',
                   ...item

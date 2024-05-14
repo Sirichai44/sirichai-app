@@ -47,3 +47,9 @@
 .input-focused-highlight {
   --Input-focusedHighlight: #a1a1aa !important;
 }
+
+/* override label */
+.MuiFormLabel-root {
+  /* color: var(--text-color) !important; */
+  font-weight: lighter !important;
+}

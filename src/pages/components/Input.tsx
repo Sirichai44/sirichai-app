@@ -1,6 +1,6 @@
 import { Input, FormControl } from '@mui/joy';
 import { styled } from '@mui/joy/styles';
-import { FC, forwardRef, useId } from 'react';
+import { CSSProperties, FC, forwardRef, useId } from 'react';
 // import InfoOutlined from '@mui/icons-material/InfoOutlined';
 import { Controller } from 'react-hook-form';
 
@@ -10,10 +10,12 @@ export interface InputProps {
   nameField: string;
   type: string;
   error: any;
+  disabled: boolean;
+  defaultValue: string;
+  innerLabel: boolean;
   triggerField?: string;
   placeholder?: string;
-  disabled: boolean;
-  defaultValue: string | { label: string; value: string };
+  style?: CSSProperties;
 }
 
 const GenInput: FC<InputProps> = (props) => {
@@ -22,7 +24,6 @@ const GenInput: FC<InputProps> = (props) => {
       key={props.nameField}
       name={props.nameField}
       control={props.control}
-      defaultValue={props.defaultValue}
       render={({ field }) => (
         <FormControl error={false}>
           <Input
@@ -34,8 +35,10 @@ const GenInput: FC<InputProps> = (props) => {
             }}
             disabled={props.disabled}
             error={!!props.error}
+            defaultValue={props.defaultValue}
             // endDecorator={props.error !== '' ? ErrorInput(props.error) : null}
-            slots={{ input: InnerInput }}
+            // slots={{ input: InnerInput }}
+            slots={{ input: props.innerLabel ? InnerInput : undefined }}
             slotProps={{
               input: {
                 name: props.nameField.replace('_', ' '), // replace underscore with space
@@ -43,10 +46,12 @@ const GenInput: FC<InputProps> = (props) => {
                 type: props.type
               }
             }}
+            size="sm"
             sx={{
               '--Input-minHeight': '36px',
               '--Input-radius': '6px',
-              width: '240px'
+              width: props.style?.width || '240px',
+              margin: props.style?.margin
             }}
             className={`my-3 capitalize ${props.error !== '' ? 'input-focused-highlight-error' : 'input-focused-highlight'}`}
           />

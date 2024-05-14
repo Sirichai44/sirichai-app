@@ -1,5 +1,14 @@
 export interface IStateAuth {
   profile: IAuthProfile;
+  current_info: ICurrentInfo;
+  assistant: { content: IContentAssistant[] };
+}
+
+export interface IContentAssistant {
+  text: string;
+  role: string;
+  finish: boolean;
+  resp_time: number;
 }
 
 //call register
@@ -25,4 +34,34 @@ export interface ICurrenUser {
   email: string;
   token: string;
   exp: number;
+}
+
+export interface ICurrentInfo {
+  system: string;
+  position: IPosition;
+  weather: IWeather;
+}
+
+export interface IPosition {
+  latitude: number;
+  longitude: number;
+}
+
+export interface IWeather {
+  loading: boolean;
+  weather: string;
+  description: string;
+  icon: string;
+  temp: number;
+  feels_like: number;
+  humidity: number;
+  wind: { speed: number; deg: number };
+  clouds: number;
+  system: {
+    country: string;
+    name: string;
+    sunrise: number;
+    sunset: number;
+    timezone: number;
+  };
 }
