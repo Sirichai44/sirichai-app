@@ -8,10 +8,10 @@ const Skills = () => {
   const storage = ['MongoDB', 'Redis', 'Firebase', 'Elasticsearch'];
   const devops = ['Docker', 'Git', 'CLI'];
   return (
-    <div className={`flex w-screen h-auto border border-red-500 p-8 flex-wrap`}>
+    <div className={`flex w-screen h-auto p-8 flex-wrap`}>
       {/* <div className={`${lg ? 'w-4/12' : 'w-full flex'} p-8 border border-blue-400`}> */}
       <div
-        className={`mb-8 ${!lg ? 'w-6/12' : 'w-4/12'} mr-8 rounded-3xl bg-gradient-to-tr from-gray-900 from-70%  to-blue-950 p-8 relative`}>
+        className={`mb-8 ${!sm ? 'w-full' : !lg ? 'w-6/12' : 'w-4/12'} mr-8 rounded-3xl bg-gradient-to-tr from-gray-900 from-70%  to-blue-950 p-8 relative`}>
         <div className="flex items-center mb-8">
           <img src="src/assets/coursera.png" className="w-20 mr-4" />
           <div className="flex flex-col">
@@ -32,7 +32,7 @@ const Skills = () => {
       </div>
 
       <div
-        className={`mb-8 w-4/12 mr-8 rounded-3xl bg-gradient-to-tr from-gray-900 from-70% to-blue-950 p-8`}>
+        className={`mb-8 ${!sm ? 'w-full' : 'w-4/12 '} mr-8 rounded-3xl bg-gradient-to-tr from-gray-900 from-70% to-blue-950 p-8`}>
         <div className="h-full">
           <div className="flex items-center">
             <img src="src/assets/palette.png" className="w-6 mr-2" />
@@ -53,7 +53,7 @@ const Skills = () => {
 
       {/* <div className={`${lg ? 'w-4/12' : 'w-full'} h-full p-8 border border-blue-400`}> */}
       <div
-        className={`mb-8 ${!lg ? 'w-7/12' : 'w-3/12'} rounded-3xl h-auto bg-gradient-to-tr from-gray-900 from-70% to-blue-950 p-8 mr-8`}>
+        className={`mb-8 ${!sm ? 'w-full' : !lg ? 'w-7/12' : 'w-3/12'} rounded-3xl h-auto bg-gradient-to-tr from-gray-900 from-70% to-blue-950 p-8 mr-8`}>
         <div className="flex items-center">
           <img src="src/assets/programming.png" className="w-6 mr-2" />
           <span className="text-sm">Programming languages and frmeworks</span>
@@ -74,7 +74,7 @@ const Skills = () => {
 
       {/* <div className={`${lg ? 'w-4/12' : 'w-6/12'} h-full p-8 border border-blue-400 `}> */}
       <div
-        className={`mb-8 w-4/12 rounded-3xl max-h-60 bg-gradient-to-tr from-gray-900 from-70% to-blue-950 p-8 mr-8`}>
+        className={`mb-8 ${!sm ? 'w-full' : 'w-4/12'} rounded-3xl max-h-60 bg-gradient-to-tr from-gray-900 from-70% to-blue-950 p-8 mr-8`}>
         <div className="flex items-center">
           <img src="src/assets/docker.png" className="w-6 mr-2" />
           <span className="text-sm">Devops</span>
@@ -91,7 +91,7 @@ const Skills = () => {
         </div>
       </div>
 
-      <div className="mb-8 rounded-3xl h-60 w-auto bg-gradient-to-tr from-gray-900 from-70% to-blue-950 p-8">
+      <div className="mb-8 rounded-3xl w-auto bg-gradient-to-tr from-gray-900 from-70% to-blue-950 p-8">
         <div className="flex items-center">
           <img src="src/assets/server.png" className="w-6 mr-2" />
           <span className="text-sm">Data storage and caching</span>
